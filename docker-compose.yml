@@ -13,12 +13,28 @@ services:
     environment:
       APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD in the .env file}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}   # set to true once it is served over https
-      TRUST_PROXY: ${TRUST_PROXY:-false}       # set to true when behind a reverse proxy
+      TRUST_PROXY: ${TRUST_PROXY:-false}       # set to true when behind a reverse proxy or tunnel
       TZ: Australia/Perth
     volumes:
       - books-data:/data
     networks:
       - honey
+
+  # Optional: Cloudflare Tunnel, so the app is reachable from anywhere over https
+  # without opening any port on your router. Switched on by COMPOSE_PROFILES=tunnel in .env.
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: little-honey-treats-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?Set TUNNEL_TOKEN in the .env file}
+    depends_on:
+      - books
+    networks:
+      - honey
+    profiles:
+      - tunnel
 
 networks:
   honey:

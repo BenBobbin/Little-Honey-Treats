@@ -4,3 +4,6 @@ node_modules/
 *.db
 *.db-wal
 *.db-shm
+Little-Honey-Treats/
+Backups/
+*.tar.gz
