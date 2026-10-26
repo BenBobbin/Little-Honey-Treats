@@ -1,0 +1,12 @@
+{
+  "name": "little-honey-books",
+  "version": "1.0.0",
+  "description": "Self-hosted bookkeeping for Little Honey Treats: invoices, quotes, expenses, stock, time and travel, P&L and BAS summary.",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  }
+}

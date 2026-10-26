@@ -1,0 +1,1360 @@
+<!doctype html><html lang="en-AU"><head><meta charset=utf8><script src="/shim.js"></script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Little Honey Treats</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout concept: a honey-yellow and black bee-stripe band over a clean order book.
+   Honey carries brand and income, black carries action and spending, red and green are kept for overdue and paid. */
+:root{
+  --paper:#FBF8EC; --card:#FFFFFF; --ink:#17140A; --muted:#6A6249; --line:#E7E0C6; --line-2:#F3EEDB;
+  --honey:#F7B500; --honey-soft:#FFF0B8; --honey-deep:#8A5A00;
+  --accent:#8A5A00; --accent-ink:#17140A; --accent-soft:#FFF0B8;
+  --btn-bg:#17140A; --btn-ink:#FFC933; --band:#17140A; --band-ink:#FFC933;
+  --docket:#C2271D; --docket-soft:#FBEAE8;
+  --good:#11795A; --good-soft:#E0F3EB; --warn:#8A5A00; --warn-soft:#FFF0B8;
+  --bar2:#17140A; --shadow:0 1px 2px rgba(23,20,10,.07);
+  --f-display:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F0D06; --card:#1B1810; --ink:#F4EEDA; --muted:#A39A7C; --line:#352F19; --line-2:#252111;
+  --honey:#FFC933; --honey-soft:#3A2F08; --honey-deep:#FFCB2F;
+  --accent:#FFCB2F; --accent-ink:#0F0D06; --accent-soft:#3A2F08;
+  --btn-bg:#FFC933; --btn-ink:#0F0D06; --band:#000000; --band-ink:#FFC933;
+  --docket:#FF7B6F; --docket-soft:#3A1F22;
+  --good:#47D3A0; --good-soft:#143328; --warn:#FFCB2F; --warn-soft:#3A2F08;
+  --bar2:#7A7152; --shadow:none; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --paper:#0F0D06; --card:#1B1810; --ink:#F4EEDA; --muted:#A39A7C; --line:#352F19; --line-2:#252111;
+  --honey:#FFC933; --honey-soft:#3A2F08; --honey-deep:#FFCB2F;
+  --accent:#FFCB2F; --accent-ink:#0F0D06; --accent-soft:#3A2F08;
+  --btn-bg:#FFC933; --btn-ink:#0F0D06; --band:#000000; --band-ink:#FFC933;
+  --docket:#FF7B6F; --docket-soft:#3A1F22;
+  --good:#47D3A0; --good-soft:#143328; --warn:#FFCB2F; --warn-soft:#3A2F08;
+  --bar2:#7A7152; --shadow:none; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.page{max-width:1080px;margin:0 auto;padding-bottom:64px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:22px;font-weight:800}
+h3{font-size:16px;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.label{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.bar{position:relative;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:14px 0 6px;padding:16px 18px 22px;background:var(--band);color:var(--band-ink);border-radius:10px;border:1px solid var(--line)}
+.bar::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(135deg,#FFC933 0 9px,#17140A 9px 18px)}
+.bar .label{color:#D8C377}
+.brand{font-family:var(--f-display);font-weight:800;font-size:23px;letter-spacing:-.02em;display:flex;align-items:center;gap:11px;min-width:0;line-height:1.1}
+.brand svg{flex:none}
+.brand span.name{overflow-wrap:anywhere}
+.fy{margin-left:auto;display:flex;align-items:center;gap:8px}
+.fy select{padding:6px 28px 6px 10px}
+.nav{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);margin:0 0 22px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:10px 14px;text-decoration:none;color:var(--muted);font-weight:500;border-bottom:3px solid transparent;margin-bottom:-1px}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--honey)}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:6px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:500;line-height:1.2;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--btn-bg);border-color:var(--btn-bg);color:var(--btn-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--accent);padding:6px 8px}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.danger{color:var(--docket);border-color:var(--docket)}
+.btn.sm{padding:4px 9px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.linklike{background:none;border:0;padding:0;cursor:pointer;text-align:left}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);min-width:0}
+input[type=checkbox]{width:auto;accent-color:var(--honey-deep)}
+textarea{resize:vertical;min-height:64px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field>label,.field>.label{font-size:12.5px;font-weight:600;color:var(--muted)}
+.hint{font-size:12.5px;color:var(--muted)}
+.check{display:flex;align-items:center;gap:8px;min-height:38px}
+.check input{margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.grid.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row.sp{justify-content:space-between}
+.stack{display:flex;flex-direction:column;gap:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;border:1px solid var(--line);border-radius:99px;background:var(--card);cursor:pointer;font-size:13.5px}
+.chip[aria-pressed="true"]{background:var(--honey);color:#17140A;border-color:var(--honey);font-weight:600}
+
+/* surfaces */
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:var(--shadow)}
+.sect{display:flex;flex-direction:column;gap:12px}
+.sect>header{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;justify-content:space-between}
+.empty{padding:28px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:8px}
+.empty strong{display:block;color:var(--ink);font-family:var(--f-display);font-size:17px;margin-bottom:4px}
+.notice{padding:12px 14px;border-radius:8px;background:var(--warn-soft);color:var(--ink);border:1px solid var(--line)}
+
+/* ledger strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:3px solid var(--honey);border-bottom:1px solid var(--line)}
+.strip>div{padding:12px 14px 12px 0;display:flex;flex-direction:column;gap:2px;min-width:0}
+.strip .v{font-family:var(--f-display);font-weight:800;font-size:26px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.neg{color:var(--docket)}
+.pos{color:var(--good)}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl tbody tr[data-act]{cursor:pointer}
+.tbl tbody tr[data-act]:hover td{background:var(--line-2)}
+.docno{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--honey-deep);white-space:nowrap}
+.pill{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--line-2);color:var(--muted)}
+.pill.paid,.pill.accepted{background:var(--good-soft);color:var(--good)}
+.pill.overdue,.pill.declined{background:var(--docket-soft);color:var(--docket)}
+.pill.part-paid,.pill.unpaid,.pill.sent,.pill.issued{background:var(--accent-soft);color:var(--accent)}
+.pill.cogs,.pill.capital{background:var(--warn-soft);color:var(--warn)}
+.pill.draft,.pill.invoiced,.pill.fixed,.pill.variable{background:var(--line-2);color:var(--muted)}
+
+/* report table */
+.rep{font-family:var(--f-mono);font-size:12.5px;border-collapse:collapse;width:100%}
+.rep th,.rep td{padding:6px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-2)}
+.rep th:first-child,.rep td:first-child{text-align:left;position:sticky;left:0;background:var(--card);font-family:var(--f-body);font-size:13.5px;min-width:190px;z-index:1}
+.rep th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--line)}
+.rep tr.cat td:first-child{padding-left:26px;color:var(--muted)}
+.rep tr.grp td{font-weight:600;font-family:var(--f-mono)}
+.rep tr.grp td:first-child{font-family:var(--f-body);font-weight:600}
+.rep tr.tot td{font-weight:600;border-top:1px solid var(--ink);border-bottom:2px solid var(--line)}
+.rep tr.tot td:first-child{font-family:var(--f-body)}
+.rep tr.sub td{color:var(--muted)}
+.rep td.total{border-left:1px solid var(--line);font-weight:500}
+
+/* editor */
+.edhead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.bignum{font-family:var(--f-mono);font-size:22px;font-weight:500;color:var(--honey-deep);border:0;background:transparent;padding:2px 0;width:12ch;border-bottom:1px dashed var(--line);border-radius:0}
+.line{display:grid;grid-template-columns:minmax(0,1fr) 72px 104px 52px 96px 34px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-2)}
+.line.head{padding:0 0 6px}
+.line .amt{text-align:right;font-variant-numeric:tabular-nums}
+.line .gstlbl{display:none}
+.totals{margin-left:auto;width:min(100%,320px);display:flex;flex-direction:column;gap:4px}
+.totals div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.totals .due{border-top:2px solid var(--ink);padding-top:6px;margin-top:4px;font-weight:700;font-size:17px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:var(--card);padding:7px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--honey);color:#17140A;font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);z-index:50;font-size:14px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--docket);color:#fff}
+.legend{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+svg text{font-family:var(--f-body);font-size:11px;fill:var(--muted)}
+svg .gl{stroke:var(--line);stroke-width:1}
+
+.pill.personnel{background:var(--accent-soft);color:var(--accent)}
+.rep tr.head td{background:var(--honey-soft);font-weight:600;font-family:var(--f-body);font-size:13px}
+.rep tr.head td:first-child{background:var(--honey-soft)}
+.rep tr.gtot td{font-weight:600;border-top:1px solid var(--line)}
+.rep tr.gtot td:first-child{font-family:var(--f-body)}
+.rline{display:grid;grid-template-columns:minmax(0,1fr) 130px 86px 52px 34px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-2)}
+.rline.head{padding:0 0 6px}
+.rline .rq{display:flex;align-items:center;gap:6px}
+.rline .rc{text-align:right;font-variant-numeric:tabular-nums}
+.sline{display:grid;grid-template-columns:150px minmax(0,1fr) 120px 34px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-2)}
+.up{color:var(--docket)}.down{color:var(--good)}
+.share{height:6px;background:var(--line-2);border-radius:3px;overflow:hidden;min-width:44px}.share i{display:block;height:100%;background:var(--honey)}
+.big{font-family:var(--f-display);font-weight:800;font-size:28px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.costpanel{display:flex;flex-direction:column;gap:6px;margin-left:auto;width:min(100%,380px)}
+.costpanel div{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .rline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 34px}
+  .rline.head{display:none}
+  .rline .ri{grid-column:1/-1}
+  .rline .rs{display:none}
+  .sline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 34px}
+  .sline .sd{grid-column:1/-1}
+  .line{grid-template-columns:repeat(3,minmax(0,1fr)) 34px}
+  .line.head{display:none}
+  .line .desc{grid-column:1/-1}
+  .line .gstc{display:flex;align-items:center;gap:6px}
+  .line .gstlbl{display:inline}
+  .line .amt{grid-column:span 2}
+  .strip .v{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+
+<div class="page">
+  <header class="bar">
+    <div class="brand"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><polygon points="15,2 26,8.5 26,21.5 15,28 4,21.5 4,8.5" fill="#FFC933"/><polygon points="15,9 20.5,12.2 20.5,17.8 15,21 9.5,17.8 9.5,12.2" fill="#17140A"/></svg><span class="name" id="brandname">Little Honey Treats</span></div>
+    <div class="fy"><label class="label" for="fysel">Financial year</label><select id="fysel"></select><form method="post" action="/logout" style="margin:0"><button class="btn sm" type="submit" style="background:transparent;color:#FFC933;border-color:#6A6249">Sign out</button></form></div>
+  </header>
+  <nav class="nav" id="nav" aria-label="Sections">
+    <a href="#overview" data-v="overview">Overview</a>
+    <a href="#sales" data-v="sales">Sales</a>
+    <a href="#expenses" data-v="expenses">Expenses</a>
+    <a href="#stock" data-v="stock">Recipes &amp; stock</a>
+    <a href="#time" data-v="time">Time &amp; travel</a>
+    <a href="#reports" data-v="reports">Reports</a>
+    <a href="#lists" data-v="lists">Customers &amp; items</a>
+    <a href="#settings" data-v="settings">Settings</a>
+  </nav>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script id="engine">
+const Engine=(function(){
+'use strict';
+const pad=n=>String(n).padStart(2,'0');
+const r2=n=>{n=Number(n)||0;return Math.round((n+(n<0?-1e-9:1e-9))*100)/100;};
+const DEFAULTS={businessName:'Little Honey Treats',abn:'',address:'',email:'',phone:'',gstRegistered:true,gstRate:10,pricesIncludeGst:false,
+  termsDays:14,invoicePrefix:'INV-',quotePrefix:'QUO-',labourRate:60,kmRate:0.88,claimKm:true,
+  bankName:'',bsb:'',accountNo:'',invoiceFooter:'Thank you for choosing Little Honey Treats.'};
+const CATS={
+  cogs:['Ingredients','Packaging','Decorations & toppers','Boxes & boards','Freight in','Direct labour'],
+  personnel:['Salaries & wages','Casual wages','Commissions & incentives','Sick & annual leave','Long service leave','Payroll tax','Workers compensation','Superannuation','Staff training','Staff amenities'],
+  variable:['Vehicle running costs','Vehicle (km claim)','Office supplies & postage','Tools, uniforms & other supplies','Advertising & promotion','Advertising – internet','Computer & software','Cleaning & security','Accounting, audit & legal','Outside services','Travel, accommodation & entertainment','Travel costs (tolls, parking)','Communications, phone & mobiles','Equipment hire & lease rental','Freight & delivery','Bank charges','Payment & platform fees','Subscriptions & donations','Repairs & maintenance – equipment','Training','Remakes & goodwill','Non-deductible'],
+  fixed:['Rent & lease','Insurance – general','Insurance – public & product liability','Repairs & maintenance – property','Rates & taxes','Heat, light & power','Licences & registrations','Home office','Lease payments','Depreciation'],
+  capital:['Equipment','Tools','Vehicle']};
+// Class keys are stored on expenses: cogs, personnel, variable (shown as "Semi-fixed"), fixed, capital.
+const CLS_LABEL={cogs:'Cost of goods',personnel:'Personnel',variable:'Semi-fixed',fixed:'Fixed',capital:'Equipment'};
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function todayISO(d){d=d||new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function addDays(iso,n){const p=iso.split('-').map(Number);const t=new Date(Date.UTC(p[0],p[1]-1,p[2]+n));return t.getUTCFullYear()+'-'+pad(t.getUTCMonth()+1)+'-'+pad(t.getUTCDate());}
+function fyStart(iso){const y=+iso.slice(0,4),m=+iso.slice(5,7);return m>=7?y:y-1;}
+const fyLabel=sy=>'FY'+sy+'-'+String(sy+1).slice(2);
+const fyRange=sy=>[sy+'-07-01',(sy+1)+'-06-30'];
+function quarterRange(sy,q){const s=[[sy+'-07-01',sy+'-09-30'],[sy+'-10-01',sy+'-12-31'],[(sy+1)+'-01-01',(sy+1)+'-03-31'],[(sy+1)+'-04-01',(sy+1)+'-06-30']];return s[q-1];}
+function quarterOf(iso){const m=+iso.slice(5,7);return m>=7&&m<=9?1:m>=10?2:m<=3?3:4;}
+function periodRange(sy,p){return p==='all'?fyRange(sy):quarterRange(sy,+String(p).slice(1));}
+function monthList(from,to){const out=[];let y=+from.slice(0,4),m=+from.slice(5,7);const y2=+to.slice(0,4),m2=+to.slice(5,7);
+  while(y<y2||(y===y2&&m<=m2)){out.push(y+'-'+pad(m));m++;if(m>12){m=1;y++;}}return out;}
+const monthLabel=k=>MON[+k.slice(5,7)-1]+' '+k.slice(2,4);
+const inRange=(d,a,b)=>!!d&&d>=a&&d<=b;
+const rateOf=S=>S.gstRegistered?(Number(S.gstRate)||0)/100:0;
+
+function lineCalc(l,taxMode,S){
+  const rate=rateOf(S),amt=(+l.qty||0)*(+l.price||0),taxable=!!l.gst&&rate>0;
+  let net,gst,gross;
+  if(taxMode==='inc'){gross=amt;gst=taxable?amt*rate/(1+rate):0;net=gross-gst;}
+  else{net=amt;gst=taxable?amt*rate:0;gross=net+gst;}
+  return {net,gst,gross,taxable};
+}
+function docTotals(doc,S){
+  let net=0,gst=0,gross=0,free=0,cost=0,hasCost=false;
+  for(const l of (doc.lines||[])){
+    const c=lineCalc(l,doc.taxMode,S);net+=c.net;gst+=c.gst;gross+=c.gross;if(!c.taxable)free+=c.gross;
+    if(l.cost!==undefined&&l.cost!==''&&l.cost!==null&&+l.cost>0){cost+=(+l.qty||0)*(+l.cost);hasCost=true;}
+  }
+  let sub,g,total;
+  if(doc.taxMode==='inc'){total=r2(gross);g=r2(gst);sub=r2(total-g);}
+  else{sub=r2(net);g=r2(gst);total=r2(sub+g);}
+  const paid=r2((doc.payments||[]).reduce((a,p)=>a+(+p.amount||0),0));
+  const freeGross=r2(free);
+  return {sub,gst:g,total,paid,balance:r2(total-paid),freeGross,cost:r2(cost),
+    margin:hasCost&&sub>0?r2(sub-cost):null,marginPct:hasCost&&sub>0?(sub-cost)/sub:null};
+}
+function docStatus(doc,t,today){
+  if(doc.type==='quote')return doc.status||'draft';
+  if(t.total>0&&t.balance<=0.004)return 'paid';
+  if(doc.status==='draft'&&!(doc.payments&&doc.payments.length))return 'draft';
+  if(doc.due&&doc.due<today)return 'overdue';
+  if(t.paid>0)return 'part-paid';
+  return 'unpaid';
+}
+function nextNumber(docs,type,prefix){
+  let max=0;for(const d of docs){if(d.type!==type)continue;const m=/(\d+)$/.exec(d.number||'');if(m)max=Math.max(max,+m[1]);}
+  return prefix+String(max+1).padStart(4,'0');
+}
+function incomeEvents(docs,S){
+  const out=[];
+  for(const d of docs){
+    if(d.type!=='invoice')continue;const t=docTotals(d,S);if(!t.total)continue;
+    for(const p of (d.payments||[])){
+      const a=+p.amount||0;if(!a||!p.date)continue;
+      const g=r2(a*t.gst/t.total);
+      out.push({date:p.date,gross:r2(a),gst:g,ex:r2(a-g),free:r2(a*t.freeGross/t.total),docId:d.id,number:d.number,customer:d.customerName||'',method:p.method||''});
+    }
+  }
+  return out;
+}
+function expenseCalc(e,S){
+  const rate=rateOf(S),amt=+e.amount||0;
+  const pct=(e.bizPct===undefined||e.bizPct===''||e.bizPct===null)?100:Math.min(100,Math.max(0,+e.bizPct));
+  const gstFull=(rate>0&&e.hasGst)?amt*rate/(1+rate):0;
+  const bizGross=r2(amt*pct/100),gstClaim=r2(gstFull*pct/100);
+  return {gross:r2(amt),bizGross,gstClaim,net:r2(bizGross-gstClaim),pct};
+}
+const monthIdx=k=>(+k.slice(0,4))*12+(+k.slice(5,7))-1;
+const keyOf=i=>Math.floor(i/12)+'-'+pad(i%12+1);
+function monthEnd(mk){const y=+mk.slice(0,4),m=+mk.slice(5,7);return addDays((m===12?y+1:y)+'-'+pad(m===12?1:m+1)+'-01',-1);}
+function unitCost(ing){const ps=+ing.packSize||0;return ps>0?(+ing.packPrice||0)/ps:0;}
+function recipeCost(rec,ingById){
+  let mat=0;const lines=[],byCat={};
+  for(const l of (rec.lines||[])){
+    const ing=ingById[l.ingredientId],c=ing?unitCost(ing)*(+l.qty||0):0,cat=ing?(ing.category||'Ingredient'):'Ingredient';
+    lines.push({id:l.id,ingredientId:l.ingredientId,qty:+l.qty||0,cost:c,name:ing?ing.name:'(removed ingredient)',unit:ing?ing.unit:'',cat});
+    byCat[cat]=(byCat[cat]||0)+c;mat+=c;
+  }
+  const waste=1+(+rec.wastePct||0)/100,yld=+rec.yield>0?+rec.yield:1;
+  return {materials:mat,withWaste:mat*waste,wasteAmt:mat*(waste-1),perUnit:mat*waste/yld,yield:yld,lines,byCat};
+}
+const stockTotal=st=>r2(((st&&st.lines)||[]).reduce((a,l)=>a+(+l.value||0),0));
+function stockAt(stocktakes,date){let best=null;for(const s of (stocktakes||[])){if(s.date&&s.date<=date&&(!best||s.date>=best.date))best=s;}return best;}
+function assetList(expenses,S){
+  return expenses.filter(e=>e.cls==='capital'&&e.date).map(e=>{
+    const c=expenseCalc(e,S),life=(e.lifeYears===undefined||e.lifeYears===''||e.lifeYears===null)?5:Math.max(0,+e.lifeYears||0);
+    return {id:e.id,name:[e.supplier,e.desc].filter(Boolean).join(' – ')||e.category||'Equipment',date:e.date,cost:c.net,life};
+  });
+}
+function deprAccum(a,mk){
+  const n=monthIdx(mk)-monthIdx(a.date.slice(0,7));
+  if(n<0)return 0;if(a.life<=0)return a.cost;
+  return r2(Math.min(a.cost,a.cost*(n+1)/(a.life*12)));
+}
+const deprMonth=(a,mk)=>r2(deprAccum(a,mk)-deprAccum(a,keyOf(monthIdx(mk)-1)));
+function buildPL(data,S,from,to,opts){
+  opts=opts||{};
+  const months=monthList(from,to);
+  const mk=()=>Object.fromEntries(months.map(m=>[m,0]));
+  const add=(o,m,v)=>{if(m in o)o[m]=r2(o[m]+v);};
+  const arr=o=>months.map(m=>o[m]);
+  const sum=a=>r2(a.reduce((x,y)=>x+y,0));
+  const income=mk();
+  for(const ev of incomeEvents(data.docs,S))if(inRange(ev.date,from,to))add(income,ev.date.slice(0,7),ev.ex);
+  const groups={cogs:{},personnel:{},variable:{},fixed:{}};
+  const put=(cls,cat,m,v)=>{const g=groups[cls];g[cat]=g[cat]||mk();add(g[cat],m,v);};
+  for(const e of data.expenses){
+    if(e.cls==='capital'||!inRange(e.date,from,to))continue;
+    put(groups[e.cls]?e.cls:'fixed',e.category||'Uncategorised',e.date.slice(0,7),expenseCalc(e,S).net);
+  }
+  const hours=mk(),value=mk();let km=0;
+  for(const t of data.time){
+    if(!inRange(t.date,from,to))continue;
+    const h=+t.hours||0,rate=(t.rate===undefined||t.rate===''||t.rate===null)?(+S.labourRate||0):+t.rate;
+    add(hours,t.date.slice(0,7),h);add(value,t.date.slice(0,7),h*rate);
+    if(t.kind==='travel'){const k=+t.km||0;km+=k;if(S.claimKm&&k>0)put('variable','Vehicle (km claim)',t.date.slice(0,7),k*(+S.kmRate||0));}
+  }
+  for(const a of assetList(data.expenses,S))for(const m of months){const v=deprMonth(a,m);if(v)put('fixed','Depreciation',m,v);}
+  const out=cls=>{
+    const g=groups[cls],cat=CATS[cls]||[],names=cat.slice();
+    Object.keys(g).filter(n=>!cat.includes(n)).sort((x,y)=>sum(arr(g[y]))-sum(arr(g[x]))).forEach(n=>names.push(n));
+    const all=names.map(n=>{const v=g[n]?arr(g[n]):months.map(()=>0);return {name:n,vals:v,total:sum(v)};});
+    const cats=all.filter(c=>opts.showAll||c.total!==0||c.vals.some(x=>x!==0));
+    const vals=months.map((m,i)=>r2(all.reduce((a,c)=>a+c.vals[i],0)));
+    return {cats,vals,total:sum(vals)};
+  };
+  const cg=out('cogs'),personnel=out('personnel'),semi=out('variable'),fixed=out('fixed');
+  const sts=data.stocktakes||[],hasStock=sts.length>0;
+  const first=stockAt(sts,addDays(from,-1));let prev=first?stockTotal(first):0;
+  const opening=[],closing=[];
+  months.forEach(m=>{opening.push(prev);const st=stockAt(sts,monthEnd(m)),c=st?stockTotal(st):prev;closing.push(c);prev=c;});
+  const cogsVals=months.map((m,i)=>r2(cg.vals[i]+opening[i]-closing[i]));
+  const openT=opening.length?opening[0]:0,closeT=closing.length?closing[closing.length-1]:0;
+  const cogs={cats:cg.cats,purchases:{vals:cg.vals,total:cg.total},opening:{vals:opening,total:openT},closing:{vals:closing,total:closeT},hasStock,vals:cogsVals,total:r2(cg.total+openT-closeT)};
+  const inc=arr(income);
+  const gp=months.map((m,i)=>r2(inc[i]-cogsVals[i]));
+  const opex=months.map((m,i)=>r2(personnel.vals[i]+semi.vals[i]+fixed.vals[i]));
+  const net=months.map((m,i)=>r2(gp[i]-opex[i]));
+  const exp=months.map((m,i)=>r2(cogsVals[i]+opex[i]));
+  const hrs=arr(hours),val=arr(value);
+  const afterOwner=months.map((m,i)=>r2(net[i]-val[i]));
+  const T=a=>({vals:a,total:sum(a)});
+  const netT=sum(net),hoursT=sum(hrs);
+  return {months,income:T(inc),cogs,grossProfit:T(gp),personnel,semi,fixed,opex:T(opex),expenses:T(exp),net:T(net),
+    hours:T(hrs),timeValue:T(val),afterOwner:T(afterOwner),km:r2(km),
+    gpPct:sum(inc)>0?sum(gp)/sum(inc):null,netPct:sum(inc)>0?netT/sum(inc):null,perHour:hoursT>0?netT/hoursT:null,
+    afterOwnerPerHour:hoursT>0?sum(afterOwner)/hoursT:null};
+}
+function buildBAS(data,S,from,to){
+  let g1=0,g3=0,a1=0;
+  for(const ev of incomeEvents(data.docs,S))if(inRange(ev.date,from,to)){g1+=ev.gross;g3+=ev.free;a1+=ev.gst;}
+  let g10=0,g11=0,b1=0;
+  for(const e of data.expenses){
+    if(!inRange(e.date,from,to))continue;const c=expenseCalc(e,S);
+    if(e.cls==='capital')g10+=c.bizGross;else g11+=c.bizGross;b1+=c.gstClaim;
+  }
+  g1=r2(g1);g3=r2(g3);a1=r2(a1);g10=r2(g10);g11=r2(g11);b1=r2(b1);
+  return {g1,g3,a1,g10,g11,b1,net:r2(a1-b1)};
+}
+function buildBalance(data,S,date){
+  const lines=[],push=(section,group,key,label,amount,note)=>lines.push({section,group,key,label,amount:r2(amount),note:note||''});
+  const latest={};
+  for(const b of (data.balances||[])){
+    if(!b.date||b.date>date)continue;const k=b.side+'|'+String(b.name||'').toLowerCase();
+    if(!latest[k]||b.date>=latest[k].date)latest[k]=b;
+  }
+  Object.keys(latest).sort().forEach(k=>{const b=latest[k],liab=b.side==='liability';
+    push(liab?'liability':'asset',liab?'Other liabilities':'Cash and other assets','m:'+k,b.name,+b.amount||0,'as at '+b.date);});
+  let ar=0,n=0;
+  for(const d of data.docs){
+    if(d.type!=='invoice'||!d.issued||d.issued>date)continue;
+    if(d.status==='draft'&&!(d.payments&&d.payments.length))continue;
+    const t=docTotals(d,S),paid=r2((d.payments||[]).filter(p=>p.date<=date).reduce((a,p)=>a+(+p.amount||0),0)),bal=r2(t.total-paid);
+    if(bal>0.004){ar+=bal;n++;}
+  }
+  if(n)push('asset','Receivables','ar','Unpaid invoices',ar,n+' invoice'+(n>1?'s':''));
+  const st=stockAt(data.stocktakes,date);
+  if(st){const by={};for(const l of (st.lines||[]))by[l.group||'Other']=(by[l.group||'Other']||0)+(+l.value||0);
+    Object.keys(by).forEach(g=>push('asset','Stock on hand','st:'+g,g,by[g],'stocktake '+st.date));}
+  for(const a of assetList(data.expenses,S)){
+    if(a.date>date)continue;const nbv=r2(a.cost-deprAccum(a,date.slice(0,7)));
+    if(nbv>0.004)push('asset','Equipment','eq:'+a.id,a.name,nbv,'cost '+plain2(a.cost));
+  }
+  if(S.gstRegistered){
+    const q=quarterOf(date),qf=quarterRange(fyStart(date),q)[0],b=buildBAS(data,S,qf,date);
+    if(b.net>0.004)push('liability','Tax','gst','GST payable (this quarter so far)',b.net);
+    else if(b.net<-0.004)push('asset','Receivables','gstref','GST refund due (this quarter so far)',-b.net);
+  }
+  const sum=sec=>r2(lines.filter(l=>l.section===sec).reduce((a,l)=>a+l.amount,0));
+  const totalAssets=sum('asset'),totalLiabilities=sum('liability');
+  return {date,lines,totalAssets,totalLiabilities,netAssets:r2(totalAssets-totalLiabilities)};
+}
+const plain2=n=>'$'+(Math.round(n*100)/100).toFixed(2);
+function receivables(docs,S,today){
+  let outstanding=0,overdue=0,overdueCount=0;const list=[];
+  for(const d of docs){
+    if(d.type!=='invoice')continue;const t=docTotals(d,S),st=docStatus(d,t,today);
+    if(st==='draft'||st==='paid'||t.balance<=0.004)continue;
+    outstanding+=t.balance;if(st==='overdue'){overdue+=t.balance;overdueCount++;}
+    list.push({d,t,st});
+  }
+  list.sort((a,b)=>(a.d.due||'').localeCompare(b.d.due||''));
+  return {outstanding:r2(outstanding),overdue:r2(overdue),overdueCount,list};
+}
+function exampleData(today){
+  const B=n=>addDays(today,-n);
+  const customers=[
+    {id:'ex-c1',name:'Bloom Florist',email:'orders@bloom.example',phone:'',abn:'',address:'',example:true},
+    {id:'ex-c2',name:'Jess Morgan',email:'',phone:'',abn:'',address:'',example:true},
+    {id:'ex-c3',name:'Northside Markets',email:'',phone:'',abn:'',address:'',example:true}];
+  const I=(n,name,cat,unit,size,price,onHand,hist)=>({id:'ex-i'+n,name,category:cat,unit,packSize:size,packPrice:price,supplier:cat==='Packaging'?'Pack Co':'Cake Supplies Wholesale',onHand,
+    history:hist||[{date:B(115),price,size}],example:true});
+  const ingredients=[
+    I(1,'Plain flour','Ingredient','g',1000,2.4,4000),I(2,'Caster sugar','Ingredient','g',1000,2.8,3000),
+    I(3,'Butter, unsalted','Ingredient','g',500,6.5,1500,[{date:B(115),price:6,size:500},{date:B(30),price:6.5,size:500}]),
+    I(4,'Eggs','Ingredient','each',12,6,24,[{date:B(115),price:5.4,size:12},{date:B(45),price:6,size:12}]),
+    I(5,'Honey','Ingredient','g',500,9,800),I(6,'Milk','Ingredient','ml',1000,1.7,2000),
+    I(7,'Cream cheese','Ingredient','g',250,4.2,750),I(8,'Vanilla extract','Ingredient','ml',100,11,80),
+    I(9,'White chocolate','Ingredient','g',1000,15,1500),I(10,'Pretzel rods','Ingredient','each',24,7.2,36),
+    I(11,'Sprinkles and edible gold','Decoration','g',100,8,150),
+    I(12,'Cake box, 6 inch','Packaging','each',10,18,14),I(13,'Cake board','Packaging','each',10,9,18),
+    I(14,'Cupcake box, 6 hole','Packaging','each',12,14.4,20),I(15,'Cellophane bag','Packaging','each',50,9,60)];
+  const R=(n,name,yld,unit,waste,lines)=>({id:'ex-r'+n,name,yield:yld,yieldLabel:unit,wastePct:waste,lines:lines.map((l,i)=>({id:'rl'+n+i,ingredientId:'ex-i'+l[0],qty:l[1]})),notes:'',example:true});
+  const recipes=[
+    R(1,'Honey cake, 6 inch',1,'cake',5,[[1,300],[2,200],[3,250],[4,4],[5,120],[6,100],[7,250],[8,5],[12,1],[13,1],[11,10]]),
+    R(2,'Cupcakes, box of 6',1,'box',5,[[1,200],[2,150],[3,150],[4,3],[6,80],[8,4],[7,125],[11,6],[14,1]]),
+    R(3,'Dipped pretzel rods',12,'rod',5,[[10,12],[9,150],[11,12],[15,12]])];
+  const ingById=Object.fromEntries(ingredients.map(i=>[i.id,i]));
+  const rc=Object.fromEntries(recipes.map(r=>[r.id,r2(recipeCost(r,ingById).perUnit)]));
+  const products=[
+    {id:'ex-p1',name:'Honey cake, 6 inch',price:65,cost:'',gst:true,recipeId:'ex-r1',example:true},
+    {id:'ex-p2',name:'Cupcakes, box of 6',price:30,cost:'',gst:true,recipeId:'ex-r2',example:true},
+    {id:'ex-p3',name:'Dipped pretzel rod',price:4.5,cost:'',gst:true,recipeId:'ex-r3',example:true},
+    {id:'ex-p4',name:'Local delivery',price:9,cost:0,gst:true,recipeId:'',example:true}];
+  const L=(p,q,price)=>({id:'l'+p.id.slice(-1)+q,desc:p.name,qty:q,price:price==null?p.price:price,gst:p.gst,cost:p.recipeId?rc[p.recipeId]:p.cost,productId:p.id});
+  const [p1,p2,p3,p4]=products;
+  const full=n=>({full:n});
+  const docs=[
+    {id:'ex-d1',type:'invoice',number:'INV-0001',customerId:'ex-c1',customerName:'Bloom Florist',issued:B(104),due:B(90),status:'issued',taxMode:'ex',lines:[L(p2,10,28),L(p3,60,4)],notes:'',pay:full(92),example:true},
+    {id:'ex-d2',type:'invoice',number:'INV-0002',customerId:'ex-c2',customerName:'Jess Morgan',issued:B(88),due:B(74),status:'issued',taxMode:'inc',lines:[L(p1,1),L(p4,1)],notes:'',pay:{full:88,method:'Card'},example:true},
+    {id:'ex-d3',type:'invoice',number:'INV-0003',customerId:'ex-c3',customerName:'Northside Markets',issued:B(71),due:B(57),status:'issued',taxMode:'ex',lines:[L(p1,6,60),L(p2,12,28)],notes:'',pay:full(60),example:true},
+    {id:'ex-d4',type:'invoice',number:'INV-0004',customerId:'ex-c1',customerName:'Bloom Florist',issued:B(58),due:B(44),status:'issued',taxMode:'ex',lines:[L(p2,12,28),L(p3,48,4)],notes:'',pay:full(41),example:true},
+    {id:'ex-d5',type:'invoice',number:'INV-0005',customerId:'ex-c2',customerName:'Jess Morgan',issued:B(44),due:B(30),status:'issued',taxMode:'inc',lines:[L(p1,1),L(p3,6),L(p4,1)],notes:'',pay:{full:44,method:'Card'},example:true},
+    {id:'ex-d6',type:'invoice',number:'INV-0006',customerId:'ex-c3',customerName:'Northside Markets',issued:B(29),due:B(15),status:'issued',taxMode:'ex',lines:[L(p1,8,60),L(p2,20,28)],notes:'',pay:{part:700,day:10},example:true},
+    {id:'ex-d7',type:'invoice',number:'INV-0007',customerId:'ex-c1',customerName:'Bloom Florist',issued:B(21),due:B(7),status:'issued',taxMode:'ex',lines:[L(p2,14,28),L(p3,60,4)],notes:'',example:true},
+    {id:'ex-d8',type:'invoice',number:'INV-0008',customerId:'ex-c2',customerName:'Jess Morgan',issued:B(3),due:B(-11),status:'draft',taxMode:'inc',lines:[L(p1,2),L(p4,1)],notes:'Birthday order, collect Saturday.',example:true},
+    {id:'ex-q1',type:'quote',number:'QUO-0001',customerId:'ex-c3',customerName:'Northside Markets',issued:B(5),due:B(-9),status:'sent',taxMode:'ex',lines:[L(p1,15,58)],notes:'Valid for 14 days.',example:true}];
+  docs.forEach(d=>{
+    const t=docTotals(d,DEFAULTS),p=d.pay;delete d.pay;d.payments=[];
+    if(p&&p.full)d.payments.push({id:'pay-'+d.id,date:B(p.full),amount:t.total,method:p.method||'Bank transfer'});
+    if(p&&p.part)d.payments.push({id:'pay-'+d.id,date:B(p.day),amount:p.part,method:'Bank transfer'});
+  });
+  const X=(d,sup,desc,cls,cat,amt,hasGst,pct,life)=>{const e={id:'ex-x'+d+cat.length+Math.round(amt),date:B(d),supplier:sup,desc,cls,category:cat,amount:amt,hasGst:hasGst!==false,bizPct:pct==null?100:pct,example:true};if(life!=null)e.lifeYears=life;return e;};
+  const expenses=[
+    X(110,'Cake Supplies Wholesale','Flour, sugar, butter, chocolate','cogs','Ingredients',330),
+    X(95,'Pack Co','Cake boxes, boards, cellophane','cogs','Packaging',99),
+    X(100,'Casual baker','Casual wages','personnel','Casual wages',240,false),
+    X(100,'Super fund','Superannuation guarantee','personnel','Superannuation',27.6,false),
+    X(80,'Cake Supplies Wholesale','Ingredients','cogs','Ingredients',220),
+    X(70,'Casual baker','Casual wages','personnel','Casual wages',240,false),
+    X(70,'Super fund','Superannuation guarantee','personnel','Superannuation',27.6,false),
+    X(65,'Australia Post','Parcels','variable','Office supplies & postage',44),
+    X(60,'Stripe','Card fees','variable','Payment & platform fees',9.35,false),
+    X(52,'Meta','Ads','variable','Advertising – internet',66),
+    X(40,'Cake Supplies Wholesale','Ingredients','cogs','Ingredients',275),
+    X(36,'Market stall','Stall fee','variable','Advertising & promotion',60,false),
+    X(30,'Perth Toll','Parking and tolls','variable','Travel costs (tolls, parking)',23.5),
+    X(25,'Business insurance','Annual premium','fixed','Insurance – public & product liability',418),
+    X(20,'Canva','Design software','variable','Computer & software',35),
+    X(14,'Telstra','Mobile plan','variable','Communications, phone & mobiles',69,true,60),
+    X(8,'Pack Co','Cake boxes','cogs','Packaging',66),
+    X(45,'Bunnings','Stand mixer','capital','Equipment',264,true,100,5)];
+  const T=(d,kind,hours,km,note,cust)=>({id:'ex-t'+d+kind,date:B(d),kind,hours,km:km||0,note,customer:cust||'',example:true});
+  const time=[T(105,'labour',5,0,'Baking and decorating'),T(92,'travel',1.5,38,'Delivery to Bloom Florist','Bloom Florist'),T(70,'labour',6,0,'Baking and labelling'),
+    T(60,'travel',2,52,'Northside Markets drop-off','Northside Markets'),T(42,'labour',4.5,0,'Packing orders'),T(41,'travel',1.25,34,'Delivery to Bloom Florist','Bloom Florist'),
+    T(28,'labour',7,0,'Large market bake'),T(10,'travel',2,52,'Northside Markets drop-off','Northside Markets'),T(9,'labour',3,0,'Admin and invoicing')];
+  const ST=(n,d,note,lines)=>({id:'ex-s'+n,date:d>0?B(d):addDays(fyRange(fyStart(today))[0],-1),note,lines:lines.map(l=>({group:l[0],desc:l[1],value:l[2]})),example:true});
+  const stocktakes=[
+    ST(1,0,'Opening stocktake (day before the financial year)',[['Ingredients','Pantry and fridge',90],['Packaging','Boxes and bags',40]]),
+    ST(2,55,'Mid-period count',[['Ingredients','Pantry and fridge',120],['Packaging','Boxes and bags',55]]),
+    ST(3,5,'Latest count',[['Ingredients','Pantry and fridge',122],['Decorations','Sprinkles and gold',12],['Packaging','Boxes and bags',76.2]])];
+  const balances=[
+    {id:'ex-b1',date:B(35),side:'asset',name:'Business bank account',amount:2210,example:true},
+    {id:'ex-b2',date:B(2),side:'asset',name:'Business bank account',amount:2840,example:true},
+    {id:'ex-b3',date:B(2),side:'liability',name:'Credit card',amount:310,example:true}];
+  return {customers,products,ingredients,recipes,docs,expenses,time,stocktakes,balances};
+}
+return {DEFAULTS,CATS,CLS_LABEL,MON,r2,todayISO,addDays,fyStart,fyLabel,fyRange,quarterRange,quarterOf,periodRange,monthList,monthLabel,inRange,
+  lineCalc,docTotals,docStatus,nextNumber,incomeEvents,expenseCalc,unitCost,recipeCost,stockTotal,stockAt,assetList,deprAccum,deprMonth,monthEnd,buildPL,buildBAS,buildBalance,receivables,exampleData};
+})();
+if(typeof module!=='undefined')module.exports=Engine;
+</script>
+
+<script id="app">
+(function(){
+'use strict';
+const E=Engine;
+const $=(s,r)=>(r||document).querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cur=new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD'});
+const plain=new Intl.NumberFormat('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+const money=n=>cur.format(E.r2(n));
+const dmy=iso=>iso?iso.slice(8,10)+'/'+iso.slice(5,7)+'/'+iso.slice(0,4):'';
+const pct=(n,d)=>n==null?'–':(n*100).toFixed(d==null?0:d)+'%';
+const num=v=>{const n=parseFloat(v);return isFinite(n)?n:0;};
+const STATUS_LABEL={draft:'Draft',issued:'Issued',unpaid:'Unpaid',overdue:'Overdue','part-paid':'Part paid',paid:'Paid',sent:'Sent',accepted:'Accepted',declined:'Declined',invoiced:'Invoiced'};
+
+const S={settings:Object.assign({},E.DEFAULTS),settingsExists:false,customers:[],products:[],docs:[],expenses:[],time:[],ingredients:[],recipes:[],stocktakes:[],balances:[],
+  loaded:{},db:null,dl:null,assets:null,dbChecked:false,today:E.todayISO(),view:'overview',busy:false,
+  ui:{sales:{filter:'all',q:'',draft:null,dirty:false},exp:{cls:'all',q:'',edit:null,limit:150},time:{edit:null,kind:'labour'},
+      rep:{tab:'pl',period:'all',bas:null,showAll:false,bsDate:null},stock:{tab:'ingredients',ingEdit:null,recipe:null,recipeDirty:false,take:null,takeDirty:false},lists:{custEdit:null,prodEdit:null},restore:null}};
+S.fy=E.fyStart(S.today);
+const VIEWS=['overview','sales','expenses','stock','time','reports','lists','settings'];
+const COLLS=['customers','products','ingredients','recipes','docs','expenses','time','stocktakes','balances'];
+const data=()=>({docs:S.docs,expenses:S.expenses,time:S.time,stocktakes:S.stocktakes,balances:S.balances});
+
+/* ---------- plumbing ---------- */
+function toast(msg,kind){const t=$('#toast');t.textContent=msg;t.className='toast show'+(kind==='err'?' err':'');clearTimeout(toast.t);toast.t=setTimeout(()=>{t.className='toast';},3400);}
+const errMsg=e=>e&&e.code==='quota_exceeded'?'The database is full. Delete some records and try again.':e&&e.code==='invalid_argument'?'You do not have permission to change this data.':'Could not save. Please try again.';
+const newId=c=>S.db.collection(c).doc().id;
+async function put(coll,id,obj){
+  if(!S.db){toast('Saving is not available in this view.','err');return false;}
+  const body=Object.assign({},obj);delete body.id;
+  try{await S.db.collection(coll).doc(id).set(JSON.parse(JSON.stringify(body)));return true;}catch(e){toast(errMsg(e),'err');return false;}
+}
+async function del(coll,id){
+  if(!S.db){toast('Saving is not available in this view.','err');return false;}
+  try{await S.db.collection(coll).doc(id).delete();return true;}catch(e){toast(errMsg(e),'err');return false;}
+}
+function armed(el,label){
+  if(el.dataset.armed==='1')return true;
+  el.dataset.armed='1';const orig=el.textContent;el.textContent=label||'Click again to confirm';el.classList.add('danger');
+  setTimeout(()=>{if(el.isConnected){el.dataset.armed='';el.textContent=orig;}},4000);return false;
+}
+let renderQueued=false,pendingRender=false;
+function scheduleRender(){
+  const a=document.activeElement;
+  if(a&&a!==document.body&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&$('#main').contains(a)){pendingRender=true;return;}
+  if(renderQueued)return;renderQueued=true;
+  requestAnimationFrame(()=>{renderQueued=false;pendingRender=false;render();});
+}
+document.addEventListener('focusout',()=>{if(pendingRender)setTimeout(scheduleRender,0);});
+
+function subscribe(){
+  const db=S.db,onErr=e=>{S.err=e;scheduleRender();};
+  COLLS.forEach(name=>{
+    db.collection(name).onSnapshot(snap=>{S[name]=snap.docs.map(x=>Object.assign({},x.data(),{id:x.id}));S.loaded[name]=true;scheduleRender();},onErr);
+  });
+  db.doc('settings/business').onSnapshot(s=>{S.settingsExists=s.exists;S.settings=Object.assign({},E.DEFAULTS,s.exists?s.data():{});S.loaded.settings=true;scheduleRender();},onErr);
+}
+const allLoaded=()=>COLLS.concat(['settings']).every(k=>S.loaded[k]);
+
+/* ---------- shared bits ---------- */
+function pill(st){return '<span class="pill '+esc(st)+'">'+esc(STATUS_LABEL[st]||st)+'</span>';}
+function fyOptions(){
+  const set=new Set([E.fyStart(S.today),S.fy]);
+  const add=d=>{if(d&&/^\d{4}-\d{2}-\d{2}$/.test(d))set.add(E.fyStart(d));};
+  S.docs.forEach(d=>{add(d.issued);(d.payments||[]).forEach(p=>add(p.date));});S.expenses.forEach(e=>add(e.date));S.time.forEach(t=>add(t.date));
+  return Array.from(set).sort((a,b)=>b-a);
+}
+function renderHeader(){
+  $('#brandname').textContent=S.settings.businessName||'Little Honey Treats';
+  const sel=$('#fysel');sel.innerHTML=fyOptions().map(y=>'<option value="'+y+'"'+(y===S.fy?' selected':'')+'>'+E.fyLabel(y)+'</option>').join('');
+  document.querySelectorAll('#nav a').forEach(a=>{if(a.dataset.v===S.view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+}
+function emptyBox(title,body,btn){return '<div class="empty"><strong>'+esc(title)+'</strong>'+esc(body)+(btn||'')+'</div>';}
+const exampleBtn='<div style="margin-top:12px"><button class="btn" data-act="load-examples">Load example data</button></div>';
+function catOptions(cls){return (E.CATS[cls]||[]).map(c=>'<option value="'+esc(c)+'">').join('');}
+
+/* ---------- overview ---------- */
+function niceMax(m){const mag=Math.pow(10,Math.floor(Math.log10(m)));for(const f of [1,2,4,5,10])if(f*mag>=m)return f*mag;return 10*mag;}
+function kfmt(v){return v>=1000?'$'+(v/1000).toFixed(v%1000?1:0).replace(/\.0$/,'')+'k':'$'+Math.round(v);}
+function chartSVG(months,inc,exp){
+  const W=Math.max(300,Math.min(760,($('#main').clientWidth||640)-2)),H=230,L=44,R=6,T=10,B=26,pw=W-L-R,ph=H-T-B;
+  const max=niceMax(Math.max(1,Math.max.apply(null,inc),Math.max.apply(null,exp)));
+  const gw=pw/months.length,bw=Math.max(3,Math.min(18,gw*.34));let s='';
+  for(let i=0;i<=4;i++){const v=max*i/4,y=T+ph-ph*i/4;s+='<line class="gl" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+kfmt(v)+'</text>';}
+  months.forEach((m,i)=>{
+    const x=L+gw*i+(gw-2*bw-2)/2,hi=ph*inc[i]/max,he=ph*exp[i]/max;
+    s+='<rect x="'+x+'" y="'+(T+ph-hi)+'" width="'+bw+'" height="'+Math.max(0,hi)+'" rx="2" fill="var(--honey)"><title>'+esc(E.monthLabel(m))+' income '+esc(money(inc[i]))+'</title></rect>';
+    s+='<rect x="'+(x+bw+2)+'" y="'+(T+ph-he)+'" width="'+bw+'" height="'+Math.max(0,he)+'" rx="2" fill="var(--bar2)"><title>'+esc(E.monthLabel(m))+' expenses '+esc(money(exp[i]))+'</title></rect>';
+    s+='<text x="'+(L+gw*i+gw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+E.MON[+m.slice(5,7)-1]+'</text>';
+  });
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="Monthly income and expenses, ex GST">'+s+'</svg>';
+}
+function vOverview(){
+  const [from,to]=E.fyRange(S.fy),pl=E.buildPL(data(),S.settings,from,to),rec=E.receivables(S.docs,S.settings,S.today);
+  const hasData=S.docs.length||S.expenses.length||S.time.length;
+  let h='<div class="stack">';
+  if(!S.settingsExists)h+='<div class="sheet"><h3>Start here</h3><p class="muted" style="margin:6px 0 12px">Add your ABN, GST status and hourly rates in Settings, then raise your first invoice. Everything you enter is saved to this page\'s private database.</p><div class="row"><a class="btn primary" href="#settings">Set up your business</a><button class="btn" data-act="load-examples">Load example data</button></div></div>';
+  h+='<section class="sect"><header><h2>'+E.fyLabel(S.fy)+'</h2><span class="muted small">Cash basis, ex GST · '+dmy(from)+' to '+dmy(to)+'</span></header>';
+  h+='<div class="strip"><div><span class="label">Income</span><span class="v">'+money(pl.income.total)+'</span></div>'+
+     '<div><span class="label">Expenses</span><span class="v">'+money(pl.expenses.total)+'</span></div>'+
+     '<div><span class="label">Net profit</span><span class="v '+(pl.net.total<0?'neg':'')+'">'+money(pl.net.total)+'</span></div>'+
+     '<div><span class="label">Profit margin</span><span class="v">'+pct(pl.netPct)+'</span></div></div>';
+  if(hasData){
+    h+='<div class="sheet"><div class="row sp" style="margin-bottom:8px"><h3>Money in and out by month</h3><div class="legend"><span><i style="background:var(--honey)"></i>Income</span><span><i style="background:var(--bar2)"></i>Expenses</span></div></div>'+chartSVG(pl.months,pl.income.vals,pl.expenses.vals)+'</div>';
+  }else{
+    h+=emptyBox('Nothing recorded in '+E.fyLabel(S.fy)+' yet','Raise an invoice or add an expense and this page fills in.',exampleBtn);
+  }
+  h+='</section>';
+  const q=E.quarterOf(S.fy===E.fyStart(S.today)?S.today:E.fyRange(S.fy)[1]);
+  const bas=E.buildBAS(data(),S.settings,E.quarterRange(S.fy,q)[0],E.quarterRange(S.fy,q)[1]);
+  h+='<div class="grid g2"><section class="sheet sect"><header><h3>Owed to you</h3><span class="mono">'+money(rec.outstanding)+'</span></header>';
+  if(rec.list.length){
+    h+='<div>'+rec.list.slice(0,6).map(x=>'<div class="row sp" style="padding:7px 0;border-bottom:1px solid var(--line-2)"><button class="linklike" data-act="open-doc" data-id="'+esc(x.d.id)+'"><span class="docno">'+esc(x.d.number)+'</span> <span class="small">'+esc(x.d.customerName||'No customer')+'</span></button><span class="row" style="gap:10px"><span class="small muted">due '+dmy(x.d.due)+'</span>'+pill(x.st)+'<span style="min-width:84px;text-align:right;font-variant-numeric:tabular-nums">'+money(x.t.balance)+'</span></span></div>').join('')+'</div>';
+    if(rec.overdueCount)h+='<p class="small neg">'+rec.overdueCount+' overdue, '+money(rec.overdue)+' to chase.</p>';
+  }else h+='<p class="muted small">No unpaid invoices.</p>';
+  h+='</section><section class="sheet sect"><header><h3>GST, quarter '+q+'</h3><span class="mono '+(bas.net<0?'pos':'')+'">'+money(Math.abs(bas.net))+'</span></header>'+
+     '<p class="small muted">'+(S.settings.gstRegistered?(bas.net>=0?'GST to pay for this quarter':'GST refund for this quarter')+', counted when money moves (cash basis). GST collected '+money(bas.a1)+' less GST on purchases '+money(bas.b1)+'.':'GST is switched off in Settings.')+'</p>'+
+     '<a class="btn" href="#reports" data-act="to-bas">Open BAS summary</a></section></div>';
+  h+='</div>';return h;
+}
+
+/* ---------- sales ---------- */
+function startDoc(type){
+  const S0=S.settings,issued=S.today;
+  S.ui.sales.draft={type,number:E.nextNumber(S.docs,type,type==='invoice'?S0.invoicePrefix:S0.quotePrefix),customerId:'',customerName:'',issued,
+    due:E.addDays(issued,type==='invoice'?(+S0.termsDays||0):14),dueAuto:true,status:'draft',taxMode:S0.pricesIncludeGst?'inc':'ex',
+    lines:[blankLine()],notes:'',payments:[]};
+  S.ui.sales.dirty=false;render();
+}
+const blankLine=()=>({id:'l'+Math.random().toString(36).slice(2,8),desc:'',qty:1,price:'',gst:true,cost:'',productId:''});
+function openDoc(id){
+  const d=S.docs.find(x=>x.id===id);if(!d)return;
+  S.view='sales';location.hash='sales';
+  S.ui.sales.draft=JSON.parse(JSON.stringify(Object.assign({dueAuto:false,taxMode:'ex',lines:[],payments:[]},d)));S.ui.sales.dirty=false;render();
+}
+function vSales(){
+  if(S.ui.sales.draft)return vDocEditor();
+  const f=S.ui.sales.filter,q=S.ui.sales.q.trim().toLowerCase();
+  let rows=S.docs.map(d=>{const t=E.docTotals(d,S.settings);return {d,t,st:E.docStatus(d,t,S.today)};});
+  rows=rows.filter(r=>{
+    if(f==='invoice'&&r.d.type!=='invoice')return false;if(f==='quote'&&r.d.type!=='quote')return false;
+    if(f==='unpaid'&&!(r.d.type==='invoice'&&['unpaid','part-paid','overdue'].includes(r.st)))return false;
+    if(f==='overdue'&&r.st!=='overdue')return false;
+    if(q&&!((r.d.number||'')+' '+(r.d.customerName||'')).toLowerCase().includes(q))return false;return true;});
+  rows.sort((a,b)=>(b.d.issued||'').localeCompare(a.d.issued||'')||(b.d.number||'').localeCompare(a.d.number||''));
+  const chip=(v,l)=>'<button class="chip" data-act="sales-filter" data-v="'+v+'" aria-pressed="'+(f===v)+'">'+l+'</button>';
+  let h='<section class="sect"><header><h2>Sales</h2><div class="row"><button class="btn primary" data-act="new-doc" data-type="invoice">New invoice</button><button class="btn" data-act="new-doc" data-type="quote">New quote</button></div></header>';
+  h+='<div class="row sp"><div class="chips">'+chip('all','All')+chip('invoice','Invoices')+chip('quote','Quotes')+chip('unpaid','Unpaid')+chip('overdue','Overdue')+'</div><div style="width:min(100%,240px)"><input id="sales-q" type="search" placeholder="Search number or customer" value="'+esc(S.ui.sales.q)+'" aria-label="Search sales"></div></div>';
+  if(!rows.length)h+=emptyBox(S.docs.length?'No matches':'No invoices or quotes yet','Create your first invoice and record payments against it. Income appears in your reports when the payment is recorded.',S.docs.length?'':exampleBtn);
+  else h+='<div class="tw"><table class="tbl"><thead><tr><th>No.</th><th>Customer</th><th>Issued</th><th>Due</th><th class="r">Total</th><th class="r">Balance</th><th>Status</th></tr></thead><tbody>'+
+    rows.map(r=>'<tr data-act="open-doc" data-id="'+esc(r.d.id)+'"><td><span class="docno">'+esc(r.d.number)+'</span></td><td>'+esc(r.d.customerName||'')+'</td><td>'+dmy(r.d.issued)+'</td><td>'+(r.d.type==='quote'?'<span class="muted">valid to '+dmy(r.d.due)+'</span>':dmy(r.d.due))+'</td><td class="r">'+money(r.t.total)+'</td><td class="r">'+(r.d.type==='quote'?'':money(r.t.balance))+'</td><td>'+pill(r.st)+'</td></tr>').join('')+'</tbody></table></div>';
+  return h+'</section>';
+}
+function vDocEditor(){
+  const d=S.ui.sales.draft,isInv=d.type==='invoice',t=E.docTotals(d,S.settings),st=E.docStatus(d,t,S.today),reg=S.settings.gstRegistered;
+  const statuses=isInv?[['draft','Draft'],['issued','Issued']]:[['draft','Draft'],['sent','Sent'],['accepted','Accepted'],['declined','Declined'],['invoiced','Converted to invoice']];
+  let h='<section class="sect"><div class="edhead"><div class="row"><button class="btn" data-act="doc-back">Back</button><div><div class="label">'+(isInv?(reg?'Tax invoice':'Invoice'):'Quote')+'</div><input class="bignum mono" id="ed-number" value="'+esc(d.number)+'" aria-label="Document number"></div></div><div class="row" id="ed-pill">'+pill(st)+'</div></div>';
+  h+='<div class="sheet stack"><div class="grid"><div class="field"><label for="ed-cust">Customer</label><input id="ed-cust" list="custlist" value="'+esc(d.customerName)+'" placeholder="Pick or type a new name" autocomplete="off"><datalist id="custlist">'+S.customers.map(c=>'<option value="'+esc(c.name)+'">').join('')+'</datalist></div>'+
+    '<div class="field"><label for="ed-issued">Date</label><input id="ed-issued" type="date" value="'+esc(d.issued)+'"></div>'+
+    '<div class="field"><label for="ed-due">'+(isInv?'Due date':'Valid until')+'</label><input id="ed-due" type="date" value="'+esc(d.due)+'"></div>'+
+    '<div class="field"><label for="ed-status">Status</label><select id="ed-status">'+statuses.map(s=>'<option value="'+s[0]+'"'+(d.status===s[0]?' selected':'')+'>'+s[1]+'</option>').join('')+'</select></div>'+
+    (reg?'<div class="field"><label for="ed-tax">Prices</label><select id="ed-tax"><option value="ex"'+(d.taxMode==='ex'?' selected':'')+'>Exclude GST</option><option value="inc"'+(d.taxMode==='inc'?' selected':'')+'>Include GST</option></select></div>':'')+'</div>';
+  h+='<div><div class="line head"><span class="label">Item</span><span class="label">Qty</span><span class="label">Price</span><span class="label">GST</span><span class="label" style="text-align:right">Amount</span><span></span></div><div id="ed-lines">'+linesHTML(d)+'</div><div style="margin-top:10px"><button class="btn sm" data-act="doc-add-line">Add line</button></div>'+
+    '<datalist id="prodlist">'+S.products.map(p=>'<option value="'+esc(p.name)+'">').join('')+'</datalist></div>';
+  h+='<div class="totals" id="ed-totals">'+totalsHTML(d)+'</div>';
+  h+='<div class="field"><label for="ed-notes">Notes on the document</label><textarea id="ed-notes" placeholder="Delivery details, terms, thank-you">'+esc(d.notes)+'</textarea></div></div>';
+  if(isInv){
+    h+='<div class="sheet stack"><h3>Payments received</h3><div id="ed-pays">'+paysHTML(d)+'</div>'+
+      '<div class="grid"><div class="field"><label for="pay-date">Date received</label><input id="pay-date" type="date" value="'+S.today+'"></div><div class="field"><label for="pay-amt">Amount</label><input id="pay-amt" type="number" step="0.01" value="'+(t.balance>0?t.balance:'')+'"></div>'+
+      '<div class="field"><label for="pay-method">Method</label><select id="pay-method"><option>Bank transfer</option><option>Card</option><option>Cash</option><option>PayPal / Stripe</option><option>Other</option></select></div><div class="field"><label>&nbsp;</label><button class="btn primary" data-act="doc-add-pay">Record payment</button></div></div>'+
+      '<p class="hint">With cash basis reporting, income and GST land in the month a payment is recorded here, not the invoice date.</p></div>';
+  }
+  h+='<div class="row">'+'<button class="btn primary" data-act="doc-save">Save</button>'+
+     (d.type==='quote'&&d.id&&d.status!=='invoiced'?'<button class="btn" data-act="doc-convert">Convert to invoice</button>':'')+
+     '<button class="btn" data-act="doc-download">Download '+(isInv?'invoice':'quote')+'</button>'+
+     (d.id?'<button class="btn danger" data-act="doc-delete">Delete</button>':'')+'</div></section>';
+  return h;
+}
+function linesHTML(d){
+  return d.lines.map((l,i)=>{
+    const c=E.lineCalc(l,d.taxMode,S.settings);
+    return '<div class="line" data-i="'+i+'"><div class="desc"><input data-lf="desc" list="prodlist" value="'+esc(l.desc)+'" placeholder="Item or description" aria-label="Item"></div>'+
+     '<input data-lf="qty" type="number" step="any" min="0" value="'+esc(l.qty)+'" aria-label="Quantity">'+
+     '<input data-lf="price" type="number" step="0.01" value="'+esc(l.price)+'" placeholder="0.00" aria-label="Price">'+
+     '<label class="gstc check" style="min-height:0"><input data-lf="gst" type="checkbox"'+(l.gst?' checked':'')+(S.settings.gstRegistered?'':' disabled')+'><span class="small muted gstlbl">GST</span></label>'+
+     '<div class="amt" data-amt>'+money(c.gross)+'</div><button class="btn ghost sm" data-act="doc-del-line" data-i="'+i+'" aria-label="Remove line">✕</button></div>';
+  }).join('');
+}
+function totalsHTML(d){
+  const t=E.docTotals(d,S.settings),isInv=d.type==='invoice';
+  return '<div><span class="muted">Subtotal</span><span>'+money(t.sub)+'</span></div>'+(S.settings.gstRegistered?'<div><span class="muted">GST</span><span>'+money(t.gst)+'</span></div>':'')+
+    '<div><span class="muted">Total</span><span>'+money(t.total)+'</span></div>'+
+    (isInv?'<div><span class="muted">Paid</span><span>'+money(t.paid)+'</span></div><div class="due"><span>Balance due</span><span>'+money(t.balance)+'</span></div>':'')+
+    (t.marginPct!=null?'<div class="small muted" style="margin-top:6px"><span>Est. margin on item costs</span><span>'+money(t.margin)+' · '+pct(t.marginPct)+'</span></div>':'');
+}
+function paysHTML(d){
+  if(!d.payments.length)return '<p class="muted small">No payments yet.</p>';
+  return d.payments.map(p=>'<div class="row sp" style="padding:6px 0;border-bottom:1px solid var(--line-2)"><span>'+dmy(p.date)+' · '+esc(p.method||'')+'</span><span class="row"><span style="font-variant-numeric:tabular-nums">'+money(p.amount)+'</span><button class="btn ghost sm" data-act="doc-del-pay" data-pid="'+esc(p.id)+'">Remove</button></span></div>').join('');
+}
+function paintTotals(){
+  const d=S.ui.sales.draft;if(!d)return;
+  const tot=$('#ed-totals');if(tot)tot.innerHTML=totalsHTML(d);
+  const t=E.docTotals(d,S.settings),pl=$('#ed-pill');if(pl)pl.innerHTML=pill(E.docStatus(d,t,S.today));
+  document.querySelectorAll('#ed-lines .line').forEach((row,i)=>{const l=d.lines[i];if(l){const a=$('[data-amt]',row);if(a)a.textContent=money(E.lineCalc(l,d.taxMode,S.settings).gross);}});
+}
+function syncDraftFromDom(){
+  const d=S.ui.sales.draft;if(!d)return;const v=id=>{const e=$(id);return e?e.value:undefined;};
+  const set=(k,x)=>{if(x!==undefined)d[k]=x;};
+  set('number',v('#ed-number'));set('customerName',v('#ed-cust'));set('issued',v('#ed-issued'));set('due',v('#ed-due'));set('status',v('#ed-status'));set('taxMode',v('#ed-tax'));set('notes',v('#ed-notes'));
+}
+async function saveDraft(opts){
+  const d=S.ui.sales.draft;if(!d||S.busy)return false;syncDraftFromDom();
+  S.busy=true;
+  try{
+    const name=(d.customerName||'').trim();let cid=d.customerId;
+    if(name){
+      const m=S.customers.find(c=>c.name.toLowerCase()===name.toLowerCase());
+      if(m)cid=m.id;else{cid=newId('customers');const ok=await put('customers',cid,{name,email:'',phone:'',abn:'',address:''});if(!ok)return false;}
+    }else cid='';
+    const lines=d.lines.filter(l=>(l.desc||'').trim()||num(l.price)).map(l=>({id:l.id,desc:(l.desc||'').trim(),qty:num(l.qty),price:num(l.price),gst:!!l.gst,cost:l.cost===''||l.cost==null?'':num(l.cost),productId:l.productId||''}));
+    const id=d.id||newId('docs');
+    const body={type:d.type,number:(d.number||'').trim()||E.nextNumber(S.docs,d.type,d.type==='invoice'?S.settings.invoicePrefix:S.settings.quotePrefix),customerId:cid,customerName:name,issued:d.issued||S.today,due:d.due||d.issued||S.today,status:d.status||'draft',taxMode:d.taxMode||'ex',lines,notes:d.notes||'',payments:(d.payments||[]).map(p=>({id:p.id,date:p.date,amount:num(p.amount),method:p.method||''}))};
+    if(d.fromQuote)body.fromQuote=d.fromQuote;if(d.invoiceId)body.invoiceId=d.invoiceId;if(d.example)body.example=true;
+    const ok=await put('docs',id,body);if(!ok)return false;
+    d.id=id;d.customerId=cid;d.number=body.number;d.lines=lines.length?lines:[blankLine()];S.ui.sales.dirty=false;
+    if(!opts||!opts.quiet)toast('Saved '+body.number);return true;
+  }finally{S.busy=false;}
+}
+function invoiceHTML(d){
+  const s=S.settings,t=E.docTotals(d,s),isInv=d.type==='invoice',reg=s.gstRegistered,cust=S.customers.find(c=>c.id===d.customerId)||{};
+  const rows=d.lines.filter(l=>(l.desc||'').trim()||num(l.price)).map(l=>{const c=E.lineCalc(l,d.taxMode,s);
+    return '<tr><td>'+esc(l.desc)+'</td><td class="r">'+esc(num(l.qty))+'</td><td class="r">'+plain.format(c.net/(num(l.qty)||1))+'</td>'+(reg?'<td class="c">'+(c.taxable?'G':'')+'</td>':'')+'<td class="r">'+plain.format(c.net)+'</td></tr>';}).join('');
+  const bank=(s.bankName||s.bsb||s.accountNo)?'<div class="box"><b>Pay by bank transfer</b><br>'+(s.bankName?esc(s.bankName)+'<br>':'')+(s.bsb?'BSB '+esc(s.bsb)+'<br>':'')+(s.accountNo?'Account '+esc(s.accountNo)+'<br>':'')+'Reference '+esc(d.number)+'</div>':'';
+  return '<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(d.number)+'</title><style>'+
+   'body{font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:#111;max-width:760px;margin:32px auto;padding:0 20px;border-top:10px solid #f7b500}h1{font-size:26px;margin:0 0 4px}.top{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.no{font-family:ui-monospace,Menlo,monospace;color:#8a5a00;font-size:18px}table{width:100%;border-collapse:collapse;margin:24px 0 8px}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;text-align:left;border-bottom:2px solid #111;padding:6px 8px}td{padding:8px;border-bottom:1px solid #ddd}.r{text-align:right}.c{text-align:center}.tot{margin-left:auto;width:260px}.tot div{display:flex;justify-content:space-between;padding:3px 0}.tot .due{border-top:2px solid #111;font-weight:700;font-size:16px;margin-top:4px;padding-top:6px}.box{margin-top:20px;padding:12px;border:1px solid #ccc;border-radius:6px}.muted{color:#666}'+
+   '</style></head><body><div class="top"><div><h1>'+(isInv?(reg?'Tax invoice':'Invoice'):'Quote')+'</h1><div class="no">'+esc(d.number)+'</div></div><div style="text-align:right"><b>'+esc(s.businessName||'')+'</b><br>'+(s.abn?'ABN '+esc(s.abn)+'<br>':'')+esc(s.address||'').replace(/\n/g,'<br>')+(s.email?'<br>'+esc(s.email):'')+(s.phone?'<br>'+esc(s.phone):'')+'</div></div>'+
+   '<p style="margin-top:20px"><span class="muted">To</span><br><b>'+esc(d.customerName||'')+'</b>'+(cust.abn?'<br>ABN '+esc(cust.abn):'')+(cust.address?'<br>'+esc(cust.address).replace(/\n/g,'<br>'):'')+'</p>'+
+   '<p class="muted">Date '+dmy(d.issued)+' · '+(isInv?'Due '+dmy(d.due):'Valid until '+dmy(d.due))+'</p>'+
+   '<table><thead><tr><th>Description</th><th class="r">Qty</th><th class="r">Unit price'+(reg?' ex GST':'')+'</th>'+(reg?'<th class="c">GST</th>':'')+'<th class="r">Amount'+(reg?' ex GST':'')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+   '<div class="tot"><div><span>Subtotal</span><span>'+plain.format(t.sub)+'</span></div>'+(reg?'<div><span>GST</span><span>'+plain.format(t.gst)+'</span></div>':'')+'<div><span>Total (AUD)</span><span>'+plain.format(t.total)+'</span></div>'+
+   (isInv&&t.paid?'<div><span>Paid</span><span>'+plain.format(t.paid)+'</span></div>':'')+(isInv?'<div class="due"><span>Balance due</span><span>'+plain.format(t.balance)+'</span></div>':'')+'</div>'+
+   (reg?'<p class="muted" style="margin-top:12px">G = taxable supply, GST included in the total above.</p>':'')+(isInv?bank:'')+(d.notes?'<p style="margin-top:16px">'+esc(d.notes).replace(/\n/g,'<br>')+'</p>':'')+(s.invoiceFooter?'<p class="muted" style="margin-top:20px">'+esc(s.invoiceFooter)+'</p>':'')+'</body></html>';
+}
+async function saveFile(filename,data){
+  if(!S.dl){toast('Downloads are not available in this view.','err');return;}
+  try{await S.dl.save({filename,data});}catch(e){if(!e||e.code!=='declined')toast('Could not save the file.','err');}
+}
+
+/* ---------- expenses ---------- */
+const CLS_OPTS=[['cogs','Cost of goods (COGS)'],['personnel','Personnel (wages, super, leave)'],['variable','Semi-fixed (advertising, postage, fees)'],['fixed','Fixed (rent, insurance, power)'],['capital','Equipment (capital)']];
+function vExpenses(){
+  const [from,to]=E.fyRange(S.fy),ed=S.ui.exp.edit?S.expenses.find(x=>x.id===S.ui.exp.edit):null;
+  const x=ed||{date:S.today,supplier:'',desc:'',cls:'variable',category:'',amount:'',hasGst:S.settings.gstRegistered,bizPct:100};
+  let rows=S.expenses.filter(e=>E.inRange(e.date,from,to));const f=S.ui.exp.cls,q=S.ui.exp.q.trim().toLowerCase();
+  rows=rows.filter(e=>(f==='all'||e.cls===f)&&(!q||((e.supplier||'')+' '+(e.desc||'')+' '+(e.category||'')).toLowerCase().includes(q)));
+  rows.sort((a,b)=>b.date.localeCompare(a.date));
+  const total=rows.reduce((a,e)=>a+E.expenseCalc(e,S.settings).bizGross,0);
+  const chip=(v,l)=>'<button class="chip" data-act="exp-filter" data-v="'+v+'" aria-pressed="'+(f===v)+'">'+l+'</button>';
+  let h='<section class="sect"><header><h2>Expenses</h2><span class="muted small">'+E.fyLabel(S.fy)+' · '+rows.length+' shown · '+money(total)+'</span></header>';
+  h+='<form class="sheet stack" data-form="expense"><h3>'+(ed?'Edit expense':'Add an expense')+'</h3><div class="grid">'+
+    '<div class="field"><label for="x-date">Date paid</label><input id="x-date" name="date" type="date" required value="'+esc(x.date)+'"></div>'+
+    '<div class="field"><label for="x-supplier">Paid to</label><input id="x-supplier" name="supplier" value="'+esc(x.supplier)+'" placeholder="Supplier or person"></div>'+
+    '<div class="field"><label for="x-desc">What for</label><input id="x-desc" name="desc" value="'+esc(x.desc)+'"></div>'+
+    '<div class="field"><label for="x-cls">Section of the P&amp;L</label><select id="x-cls" name="cls">'+CLS_OPTS.map(c=>'<option value="'+c[0]+'"'+(x.cls===c[0]?' selected':'')+'>'+c[1]+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label for="x-cat">Line</label><input id="x-cat" name="category" list="catlist" value="'+esc(x.category)+'" placeholder="Pick or type your own"><datalist id="catlist">'+catOptions(x.cls)+'</datalist></div>'+
+    '<div class="field"><label for="x-amt">Amount paid'+(S.settings.gstRegistered?' (incl. GST)':'')+'</label><input id="x-amt" name="amount" type="number" step="0.01" min="0" required value="'+esc(x.amount)+'"></div>'+
+    (S.settings.gstRegistered?'<div class="field"><label>GST</label><label class="check"><input id="x-gst" name="hasGst" type="checkbox"'+(x.hasGst?' checked':'')+'>Price includes GST</label></div>':'')+
+    '<div class="field"><label for="x-pct">Business use %</label><input id="x-pct" name="bizPct" type="number" min="0" max="100" step="1" value="'+esc(x.bizPct===undefined?100:x.bizPct)+'"></div>'+
+    '<div class="field" id="x-lifewrap"'+(x.cls==='capital'?'':' hidden')+'><label for="x-life">Useful life (years)</label><input id="x-life" name="lifeYears" type="number" min="0" step="0.5" value="'+esc(x.lifeYears===undefined?5:x.lifeYears)+'"><span class="hint">0 writes it off straight away in your P&amp;L.</span></div>'+
+    '<div class="field"><label for="x-receipt">Receipt (photo or PDF)</label>'+(S.assets?'<input id="x-receipt" type="file" accept="image/*,application/pdf">':'<input id="x-receipt" type="file" disabled><span class="hint">Receipt storage is not available in this view.</span>')+(ed&&ed.receiptId?'<span class="hint">A receipt is already attached. Choosing a file replaces it.</span>':'')+'</div></div>'+
+    '<p class="hint" id="x-prev"></p>'+
+    '<p class="hint">The section decides where it lands on the P&amp;L. <b>COGS</b>: ingredients, packaging, boxes and anything that goes into what you sell. <b>Personnel</b>: wages, super, leave, workers compensation. <b>Semi-fixed</b>: advertising, postage, fees, phone, software, travel. <b>Fixed</b>: rent, insurance, rates, power. <b>Equipment</b> is kept out of the expenses and depreciated over its useful life. Your own pay is drawings, not an expense.</p>'+
+    '<div class="row"><button class="btn primary" type="submit">'+(ed?'Save changes':'Add expense')+'</button>'+(ed?'<button class="btn" type="button" data-act="exp-cancel">Cancel</button>':'')+'</div></form>';
+  h+='<div class="row sp"><div class="chips">'+chip('all','All')+chip('cogs','COGS')+chip('personnel','Personnel')+chip('variable','Semi-fixed')+chip('fixed','Fixed')+chip('capital','Equipment')+'</div><div style="width:min(100%,240px)"><input id="exp-q" type="search" placeholder="Search expenses" value="'+esc(S.ui.exp.q)+'" aria-label="Search expenses"></div></div>';
+  if(!rows.length)h+=emptyBox('No expenses to show','Add your first one above. Ingredients, packaging, wages, postage and subscriptions all go here.',S.expenses.length?'':exampleBtn);
+  else{
+    const lim=rows.slice(0,S.ui.exp.limit);
+    h+='<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th>Paid to</th><th>Section</th><th>Line</th><th class="r">Amount</th><th class="r">GST</th><th></th></tr></thead><tbody>'+lim.map(e=>{const c=E.expenseCalc(e,S.settings);
+      return '<tr><td>'+dmy(e.date)+'</td><td>'+esc(e.supplier||'')+(e.desc?'<div class="small muted">'+esc(e.desc)+'</div>':'')+'</td><td><span class="pill '+esc(e.cls)+'">'+esc(E.CLS_LABEL[e.cls]||e.cls)+'</span></td><td>'+esc(e.category||'')+(c.pct<100?'<div class="small muted">'+c.pct+'% business</div>':'')+'</td><td class="r">'+money(e.amount)+'</td><td class="r">'+(c.gstClaim?money(c.gstClaim):'')+'</td><td class="r" style="white-space:nowrap">'+(e.receiptId?'<a class="btn ghost sm" href="/_blob/'+esc(e.receiptId)+'" target="_blank" rel="noopener">Receipt</a>':'')+'<button class="btn ghost sm" data-act="exp-edit" data-id="'+esc(e.id)+'">Edit</button><button class="btn ghost sm" data-act="exp-del" data-id="'+esc(e.id)+'">Delete</button></td></tr>';}).join('')+'</tbody></table></div>';
+    if(rows.length>lim.length)h+='<div><button class="btn" data-act="exp-more">Show more</button></div>';
+  }
+  return h+'</section>';
+}
+function paintExpensePreview(){
+  const p=$('#x-prev');if(!p)return;
+  const e={amount:num($('#x-amt').value),hasGst:$('#x-gst')?$('#x-gst').checked:false,bizPct:$('#x-pct').value===''?100:num($('#x-pct').value)},c=E.expenseCalc(e,S.settings);
+  p.textContent=e.amount?'Claimable GST '+money(c.gstClaim)+' · amount in your P&L (ex GST, business share) '+money(c.net):'';
+}
+async function saveExpense(form){
+  if(S.busy)return;const fd=new FormData(form),ed=S.ui.exp.edit?S.expenses.find(x=>x.id===S.ui.exp.edit):null;
+  const amount=num(fd.get('amount'));if(!fd.get('date')||amount<=0){toast('Add a date and an amount.','err');return;}
+  S.busy=true;
+  try{
+    const body={date:fd.get('date'),supplier:String(fd.get('supplier')||'').trim(),desc:String(fd.get('desc')||'').trim(),cls:fd.get('cls'),category:String(fd.get('category')||'').trim(),amount,hasGst:S.settings.gstRegistered&&!!form.elements.hasGst&&form.elements.hasGst.checked,bizPct:fd.get('bizPct')===''?100:Math.min(100,Math.max(0,num(fd.get('bizPct'))))};
+    if(body.cls==='capital')body.lifeYears=fd.get('lifeYears')===''?5:Math.max(0,num(fd.get('lifeYears')));
+    if(ed){if(ed.receiptId){body.receiptId=ed.receiptId;body.receiptName=ed.receiptName||'';}if(ed.example)body.example=true;}
+    const file=$('#x-receipt')&&$('#x-receipt').files&&$('#x-receipt').files[0];
+    if(file&&S.assets){try{const r=await S.assets.upload(file);body.receiptId=r.id;body.receiptName=file.name;}catch(e){toast('The receipt could not be uploaded. The expense was not saved.','err');return;}}
+    const ok=await put('expenses',ed?ed.id:newId('expenses'),body);if(!ok)return;
+    S.ui.exp.edit=null;toast(ed?'Expense updated':'Expense added');render();
+  }finally{S.busy=false;}
+}
+
+/* ---------- time & travel ---------- */
+function vTime(){
+  const [from,to]=E.fyRange(S.fy),ed=S.ui.time.edit?S.time.find(x=>x.id===S.ui.time.edit):null,kind=ed?ed.kind:S.ui.time.kind;
+  const x=ed||{date:S.today,hours:'',km:'',rate:'',note:'',customer:'',kind};
+  const rows=S.time.filter(t=>E.inRange(t.date,from,to)).sort((a,b)=>b.date.localeCompare(a.date));
+  const pl=E.buildPL(data(),S.settings,from,to),kmTotal=pl.km;
+  let h='<section class="sect"><header><h2>Time &amp; travel</h2><span class="muted small">'+E.fyLabel(S.fy)+'</span></header>';
+  h+='<div class="strip"><div><span class="label">Hours worked</span><span class="v">'+pl.hours.total.toFixed(1)+'</span></div><div><span class="label">Value of your time</span><span class="v">'+money(pl.timeValue.total)+'</span></div><div><span class="label">Kilometres</span><span class="v">'+kmTotal.toLocaleString('en-AU')+'</span></div><div><span class="label">Km claim</span><span class="v">'+money(S.settings.claimKm?kmTotal*S.settings.kmRate:0)+'</span></div></div>';
+  h+='<form class="sheet stack" data-form="time"><div class="row sp"><h3>'+(ed?'Edit entry':'Log time')+'</h3><div class="seg" role="group" aria-label="Entry type"><button type="button" data-act="time-kind" data-v="labour" aria-pressed="'+(kind==='labour')+'">Labour</button><button type="button" data-act="time-kind" data-v="travel" aria-pressed="'+(kind==='travel')+'">Travel</button></div></div><div class="grid">'+
+    '<div class="field"><label for="t-date">Date</label><input id="t-date" name="date" type="date" required value="'+esc(x.date)+'"></div>'+
+    '<div class="field"><label for="t-hours">Hours'+(kind==='travel'?' driving':'')+'</label><input id="t-hours" name="hours" type="number" step="0.25" min="0" value="'+esc(x.hours)+'"></div>'+
+    (kind==='travel'?'<div class="field"><label for="t-km">Kilometres</label><input id="t-km" name="km" type="number" step="0.1" min="0" value="'+esc(x.km)+'"></div>':'')+
+    '<div class="field"><label for="t-rate">Hourly value</label><input id="t-rate" name="rate" type="number" step="0.01" min="0" value="'+esc(x.rate)+'" placeholder="'+esc(S.settings.labourRate)+' (default)"></div>'+
+    '<div class="field"><label for="t-note">'+(kind==='travel'?'Trip':'What you did')+'</label><input id="t-note" name="note" value="'+esc(x.note)+'"></div>'+
+    '<div class="field"><label for="t-cust">Customer or job</label><input id="t-cust" name="customer" list="custlist2" value="'+esc(x.customer)+'"><datalist id="custlist2">'+S.customers.map(c=>'<option value="'+esc(c.name)+'">').join('')+'</datalist></div></div>'+
+    '<p class="hint">Your hours are not a cash cost. They show on the P&amp;L under your net profit so you can see what you really earn per hour. Km are claimed at '+money(S.settings.kmRate)+' per km when the km claim is on in Settings. Do not also claim fuel and running costs. Tolls and parking go in Expenses as Travel costs.</p>'+
+    '<div class="row"><button class="btn primary" type="submit">'+(ed?'Save changes':'Add entry')+'</button>'+(ed?'<button class="btn" type="button" data-act="time-cancel">Cancel</button>':'')+'</div></form>';
+  if(!rows.length)h+=emptyBox('No time logged in '+E.fyLabel(S.fy),'Log labour and trips as you go.',S.time.length?'':exampleBtn);
+  else h+='<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th>Type</th><th>Details</th><th class="r">Hours</th><th class="r">Km</th><th class="r">Value</th><th></th></tr></thead><tbody>'+rows.map(t=>{const rate=(t.rate===undefined||t.rate===''||t.rate===null)?S.settings.labourRate:+t.rate;
+    return '<tr><td>'+dmy(t.date)+'</td><td><span class="pill '+(t.kind==='travel'?'sent':'draft')+'">'+(t.kind==='travel'?'Travel':'Labour')+'</span></td><td>'+esc(t.note||'')+(t.customer?'<div class="small muted">'+esc(t.customer)+'</div>':'')+'</td><td class="r">'+(+t.hours||0)+'</td><td class="r">'+(t.kind==='travel'?(+t.km||0):'')+'</td><td class="r">'+money((+t.hours||0)*rate)+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="time-edit" data-id="'+esc(t.id)+'">Edit</button><button class="btn ghost sm" data-act="time-del" data-id="'+esc(t.id)+'">Delete</button></td></tr>';}).join('')+'</tbody></table></div>';
+  return h+'</section>';
+}
+async function saveTime(form){
+  if(S.busy)return;const fd=new FormData(form),ed=S.ui.time.edit?S.time.find(x=>x.id===S.ui.time.edit):null,kind=ed?ed.kind:S.ui.time.kind;
+  const hours=num(fd.get('hours')),km=kind==='travel'?num(fd.get('km')):0;
+  if(!fd.get('date')||(hours<=0&&km<=0)){toast('Add a date and some hours or kilometres.','err');return;}
+  S.busy=true;
+  try{
+    const body={kind,date:fd.get('date'),hours,km,note:String(fd.get('note')||'').trim(),customer:String(fd.get('customer')||'').trim()};
+    if(fd.get('rate')!=='')body.rate=num(fd.get('rate'));if(ed&&ed.example)body.example=true;
+    if(await put('time',ed?ed.id:newId('time'),body)){S.ui.time.edit=null;toast('Entry saved');render();}
+  }finally{S.busy=false;}
+}
+
+/* ---------- recipes & stock ---------- */
+const STOCK_GROUPS=['Ingredients','Packaging','Decorations','Finished goods','Other'];
+const ING_CATS=['Ingredient','Packaging','Decoration'];
+const ingMap=()=>Object.fromEntries(S.ingredients.map(i=>[i.id,i]));
+function productCost(p){
+  if(p&&p.recipeId){const r=S.recipes.find(x=>x.id===p.recipeId);if(r)return E.r2(E.recipeCost(r,ingMap()).perUnit);}
+  return p&&p.cost!==undefined&&p.cost!==''?(+p.cost||0):0;
+}
+function sellNet(p){const pr=+p.price||0;return(S.settings.pricesIncludeGst&&p.gst&&S.settings.gstRegistered)?pr/(1+S.settings.gstRate/100):pr;}
+function perLabel(unit,uc){if(unit==='g')return money(uc*1000)+' per kg';if(unit==='ml')return money(uc*1000)+' per litre';return money(uc)+' each';}
+function ingChange(ing){
+  const h=(ing.history||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));if(h.length<2)return null;
+  const u=x=>(+x.size>0?(+x.price||0)/(+x.size):0),a=u(h[h.length-2]),b=u(h[h.length-1]);if(!(a>0))return null;
+  return {pct:b/a-1,date:h[h.length-1].date};
+}
+function vStock(){
+  const U=S.ui.stock;
+  let h='<section class="sect"><header><h2>Recipes &amp; stock</h2><div class="seg" role="group" aria-label="Section">'+[['ingredients','Ingredients'],['recipes','Recipes'],['takes','Stocktakes']].map(t=>'<button data-act="stock-tab" data-v="'+t[0]+'" aria-pressed="'+(U.tab===t[0])+'">'+t[1]+'</button>').join('')+'</div></header>';
+  h+=U.tab==='ingredients'?vIngredients():U.tab==='recipes'?vRecipes():vTakes();
+  return h+'</section>';
+}
+function vIngredients(){
+  const U=S.ui.stock,ed=U.ingEdit?S.ingredients.find(x=>x.id===U.ingEdit):null;
+  const x=ed||{name:'',category:'Ingredient',unit:'g',packSize:'',packPrice:'',supplier:'',onHand:''};
+  const used={};S.recipes.forEach(r=>(r.lines||[]).forEach(l=>{used[l.ingredientId]=(used[l.ingredientId]||new Set()).add(r.id);}));
+  const sel=(id,name,opts,v)=>'<select id="'+id+'" name="'+name+'">'+opts.map(o=>'<option value="'+esc(o)+'"'+(o===v?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>';
+  let h='<p class="hint" style="margin:0">Enter what you pay for a pack (ex GST). When a price goes up, edit the ingredient: every recipe, and every item linked to a recipe, uses the new cost from then on. Past invoices keep the cost they were sold with.</p>';
+  h+='<form class="sheet stack" data-form="ingredient"><h3>'+(ed?'Edit ingredient':'Add an ingredient or supply')+'</h3><div class="grid">'+
+    '<div class="field"><label for="i-name">Name</label><input id="i-name" name="name" required value="'+esc(x.name)+'" placeholder="e.g. Butter, unsalted"></div>'+
+    '<div class="field"><label for="i-cat">Type</label>'+sel('i-cat','category',ING_CATS,x.category)+'</div>'+
+    '<div class="field"><label for="i-unit">Measured in</label>'+sel('i-unit','unit',['g','ml','each'],x.unit)+'</div>'+
+    '<div class="field"><label for="i-size">Pack size</label><input id="i-size" name="packSize" type="number" step="any" min="0" required value="'+esc(x.packSize)+'" placeholder="e.g. 500"></div>'+
+    '<div class="field"><label for="i-price">Pack price (ex GST)</label><input id="i-price" name="packPrice" type="number" step="0.01" min="0" required value="'+esc(x.packPrice)+'"></div>'+
+    '<div class="field"><label for="i-sup">Supplier</label><input id="i-sup" name="supplier" value="'+esc(x.supplier)+'"></div>'+
+    '<div class="field"><label for="i-hand">On hand now</label><input id="i-hand" name="onHand" type="number" step="any" min="0" value="'+esc(x.onHand)+'"><span class="hint">In the same unit as the pack size.</span></div></div>'+
+    '<p class="hint" id="i-prev"></p><div class="row"><button class="btn primary" type="submit">'+(ed?'Save changes':'Add ingredient')+'</button>'+(ed?'<button class="btn" type="button" data-act="ing-cancel">Cancel</button>':'')+'</div></form>';
+  if(!S.ingredients.length)return h+emptyBox('No ingredients yet','Add flour, sugar, butter, boxes and so on. Then build recipes from them.',S.expenses.length?'':exampleBtn);
+  const rows=S.ingredients.slice().sort((a,b)=>ING_CATS.indexOf(a.category)-ING_CATS.indexOf(b.category)||a.name.localeCompare(b.name));
+  const totalVal=rows.reduce((a,i)=>a+E.unitCost(i)*(+i.onHand||0),0);
+  h+='<div class="row sp"><span class="muted small">'+rows.length+' items · stock on hand worth '+money(totalVal)+'</span></div>';
+  h+='<div class="tw"><table class="tbl"><thead><tr><th>Item</th><th>Pack</th><th class="r">Cost</th><th class="r">Last change</th><th class="r">On hand</th><th class="r">Value</th><th>Used in</th><th></th></tr></thead><tbody>'+rows.map(i=>{
+    const uc=E.unitCost(i),ch=ingChange(i),n=used[i.id]?used[i.id].size:0;
+    return '<tr><td>'+esc(i.name)+'<div class="small muted">'+esc(i.category)+(i.supplier?' · '+esc(i.supplier):'')+'</div></td><td class="small">'+esc(i.packSize)+' '+esc(i.unit)+' for '+money(i.packPrice)+'</td><td class="r small">'+perLabel(i.unit,uc)+'</td><td class="r small">'+(ch?'<span class="'+(ch.pct>0?'up':ch.pct<0?'down':'')+'" title="'+dmy(ch.date)+'">'+(ch.pct>0?'▲ ':ch.pct<0?'▼ ':'')+Math.abs(ch.pct*100).toFixed(1)+'%</span>':'')+'</td><td class="r">'+(i.onHand===''||i.onHand==null?'':esc(i.onHand)+' '+esc(i.unit))+'</td><td class="r">'+(+i.onHand?money(uc*i.onHand):'')+'</td><td class="small">'+(n?n+' recipe'+(n>1?'s':''):'<span class="muted">none</span>')+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="ing-edit" data-id="'+esc(i.id)+'">Edit</button><button class="btn ghost sm" data-act="ing-del" data-id="'+esc(i.id)+'">Delete</button></td></tr>';}).join('')+'</tbody></table></div>';
+  return h;
+}
+function paintIngPreview(){
+  const el=$('#i-prev');if(!el)return;const size=num($('#i-size').value),price=num($('#i-price').value),u=$('#i-unit').value;
+  el.textContent=size>0&&price>0?'Works out at '+perLabel(u,price/size)+(u==='g'||u==='ml'?' ('+(price/size<0.1?'$'+(price/size).toFixed(4):money(price/size))+' per '+u+')':''):'';
+}
+async function saveIngredient(form){
+  if(S.busy)return;const fd=new FormData(form),ed=S.ui.stock.ingEdit?S.ingredients.find(x=>x.id===S.ui.stock.ingEdit):null;
+  const size=num(fd.get('packSize')),price=num(fd.get('packPrice'));
+  if(!String(fd.get('name')||'').trim()||size<=0){toast('Add a name and a pack size.','err');return;}
+  const body={name:String(fd.get('name')).trim(),category:fd.get('category'),unit:fd.get('unit'),packSize:size,packPrice:price,supplier:String(fd.get('supplier')||'').trim(),onHand:fd.get('onHand')===''?'':num(fd.get('onHand'))};
+  const hist=((ed&&ed.history)||[]).slice(),last=hist.length?hist.slice().sort((a,b)=>a.date.localeCompare(b.date))[hist.length-1]:null;
+  if(!last||+last.price!==price||+last.size!==size)hist.push({date:S.today,price,size});
+  body.history=hist;if(ed&&ed.example)body.example=true;
+  S.busy=true;try{
+    if(!(await put('ingredients',ed?ed.id:newId('ingredients'),body)))return;
+    S.ui.stock.ingEdit=null;toast(ed?'Ingredient updated':'Ingredient added');render();
+  }finally{S.busy=false;}
+}
+
+function blankRecipe(){return {name:'',yield:1,yieldLabel:'',wastePct:5,notes:'',lines:[blankRLine()]};}
+const blankRLine=()=>({id:'rl'+Math.random().toString(36).slice(2,8),ingredientId:'',qty:''});
+function vRecipes(){
+  const U=S.ui.stock;if(U.recipe)return vRecipeEditor();
+  let h='<div class="row sp"><span class="muted small">'+S.recipes.length+' recipe'+(S.recipes.length===1?'':'s')+'</span><button class="btn primary" data-act="recipe-new">New recipe</button></div>';
+  if(!S.recipes.length)return h+emptyBox('No recipes yet','A recipe lists what goes into one cake, box or batch. Its cost then follows your ingredient prices.');
+  const im=ingMap();
+  h+='<div class="tw"><table class="tbl"><thead><tr><th>Recipe</th><th>Makes</th><th class="r">Cost each</th><th class="r">Sells for (ex GST)</th><th class="r">Margin</th><th></th></tr></thead><tbody>'+S.recipes.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(r=>{
+    const c=E.recipeCost(r,im),pr=S.products.find(p=>p.recipeId===r.id),net=pr?sellNet(pr):0;
+    return '<tr><td>'+esc(r.name)+'<div class="small muted">'+(r.lines||[]).length+' ingredients'+(pr?' · item: '+esc(pr.name):'')+'</div></td><td class="small">'+esc(r.yield)+' '+esc(r.yieldLabel||'unit')+(+r.yield===1?'':'s')+'</td><td class="r">'+money(c.perUnit)+'</td><td class="r">'+(pr?money(net):'<span class="muted small">not linked</span>')+'</td><td class="r">'+(pr&&net>0?pct((net-c.perUnit)/net):'')+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="recipe-edit" data-id="'+esc(r.id)+'">Edit</button><button class="btn ghost sm" data-act="recipe-del" data-id="'+esc(r.id)+'">Delete</button></td></tr>';}).join('')+'</tbody></table></div>';
+  return h+'<p class="hint">To use a recipe as the cost of something you sell, open it in Customers &amp; items and choose it under Recipe.</p>';
+}
+function ingOptions(sel){
+  let h='<option value="">Choose…</option>';
+  ING_CATS.forEach(c=>{const l=S.ingredients.filter(i=>i.category===c).sort((a,b)=>a.name.localeCompare(b.name));if(l.length)h+='<optgroup label="'+esc(c)+'">'+l.map(i=>'<option value="'+esc(i.id)+'"'+(i.id===sel?' selected':'')+'>'+esc(i.name)+' ('+esc(i.unit)+')</option>').join('')+'</optgroup>';});
+  return h;
+}
+function vRecipeEditor(){
+  const d=S.ui.stock.recipe,im=ingMap(),rc=E.recipeCost(d,im);
+  let h='<form class="sheet stack" id="recipe-ed" data-form="recipe"><h3>'+(d.id?'Edit recipe':'New recipe')+'</h3><div class="grid">'+
+    '<div class="field"><label for="r-name">Recipe name</label><input id="r-name" value="'+esc(d.name)+'" placeholder="e.g. Honey cake, 6 inch"></div>'+
+    '<div class="field"><label for="r-yield">Makes</label><input id="r-yield" type="number" step="any" min="0" value="'+esc(d.yield)+'"></div>'+
+    '<div class="field"><label for="r-ylabel">Called a</label><input id="r-ylabel" value="'+esc(d.yieldLabel)+'" placeholder="cake, box, rod"></div>'+
+    '<div class="field"><label for="r-waste">Waste allowance %</label><input id="r-waste" type="number" step="0.5" min="0" value="'+esc(d.wastePct)+'"></div></div>';
+  if(!S.ingredients.length)h+='<div class="notice">Add ingredients first (Ingredients tab), then come back to build the recipe.</div>';
+  h+='<div><div class="rline head"><span class="label">Ingredient</span><span class="label">Amount</span><span class="label" style="text-align:right">Cost</span><span class="label rs">Share</span><span></span></div>'+
+    d.lines.map((l,i)=>{const ing=im[l.ingredientId];return '<div class="rline" data-i="'+i+'"><div class="ri"><select data-rf="ingredientId" aria-label="Ingredient">'+ingOptions(l.ingredientId)+'</select></div><div class="rq"><input data-rf="qty" type="number" step="any" min="0" value="'+esc(l.qty)+'" aria-label="Amount" style="min-width:0"><span class="unit muted small">'+esc(ing?ing.unit:'')+'</span></div><div class="rc"></div><div class="rs"><div class="share"><i></i></div></div><button class="btn ghost sm" type="button" data-act="recipe-del-line" data-i="'+i+'" aria-label="Remove line">✕</button></div>';}).join('')+'</div>'+
+    '<div><button class="btn sm" type="button" data-act="recipe-add-line">Add a line</button></div>'+
+    '<div id="r-panel"></div><div class="field"><label for="r-notes">Notes</label><textarea id="r-notes">'+esc(d.notes)+'</textarea></div>'+
+    '<div class="row"><button class="btn primary" type="submit">Save recipe</button><button class="btn" type="button" data-act="recipe-back">Back</button></div></form>';
+  return h;
+}
+function recipePanel(d,rc){
+  const label=esc(d.yieldLabel||'unit'),linked=d.id?S.products.find(p=>p.recipeId===d.id):null;
+  let h='<div class="costpanel"><div><span>Ingredients and supplies</span><span>'+money(rc.materials)+'</span></div>';
+  Object.keys(rc.byCat).forEach(k=>{h+='<div class="small muted"><span>'+esc(k)+'</span><span>'+money(rc.byCat[k])+'</span></div>';});
+  if(rc.wasteAmt>0)h+='<div><span>Waste allowance ('+esc(d.wastePct)+'%)</span><span>'+money(rc.wasteAmt)+'</span></div>';
+  h+='<div><b>Whole batch</b><b>'+money(rc.withWaste)+'</b></div><div style="align-items:baseline"><b>Cost per '+label+'</b><span class="big">'+money(rc.perUnit)+'</span></div>';
+  if(linked){const net=sellNet(linked);h+='<div class="small muted"><span>Sells as “'+esc(linked.name)+'” for '+money(net)+' ex GST</span><span>'+(net>0?pct((net-rc.perUnit)/net,1)+' margin':'')+'</span></div>';}
+  else h+='<div class="small muted"><span>Link this recipe to an item in Customers &amp; items to see your margin.</span></div>';
+  return h+'</div>';
+}
+function syncRecipe(){
+  const d=S.ui.stock.recipe;if(!d||!$('#recipe-ed'))return;
+  d.name=$('#r-name').value;d.yield=$('#r-yield').value;d.yieldLabel=$('#r-ylabel').value;d.wastePct=$('#r-waste').value;d.notes=$('#r-notes').value;
+  document.querySelectorAll('#recipe-ed .rline[data-i]').forEach(row=>{const l=d.lines[+row.dataset.i];if(!l)return;l.ingredientId=row.querySelector('[data-rf="ingredientId"]').value;l.qty=row.querySelector('[data-rf="qty"]').value;});
+}
+function paintRecipe(){
+  const d=S.ui.stock.recipe;if(!d||!$('#recipe-ed'))return;const rc=E.recipeCost(d,ingMap());
+  document.querySelectorAll('#recipe-ed .rline[data-i]').forEach(row=>{const l=rc.lines[+row.dataset.i];if(!l)return;
+    row.querySelector('.rc').textContent=l.ingredientId?money(l.cost):'';
+    row.querySelector('.rs i').style.width=(rc.materials>0?Math.round(l.cost/rc.materials*100):0)+'%';
+    row.querySelector('.unit').textContent=l.unit||'';});
+  $('#r-panel').innerHTML=recipePanel(d,rc);
+}
+async function saveRecipe(){
+  if(S.busy)return;syncRecipe();const d=S.ui.stock.recipe;
+  if(!d.name.trim()){toast('Give the recipe a name.','err');return;}
+  const lines=d.lines.filter(l=>l.ingredientId&&num(l.qty)>0).map(l=>({id:l.id,ingredientId:l.ingredientId,qty:num(l.qty)}));
+  if(!lines.length){toast('Add at least one ingredient with an amount.','err');return;}
+  const body={name:d.name.trim(),yield:num(d.yield)>0?num(d.yield):1,yieldLabel:d.yieldLabel.trim(),wastePct:num(d.wastePct),notes:d.notes,lines};
+  if(d.example)body.example=true;
+  S.busy=true;try{
+    const id=d.id||newId('recipes');if(!(await put('recipes',id,body)))return;
+    S.ui.stock.recipe=null;S.ui.stock.recipeDirty=false;toast('Recipe saved');render();
+  }finally{S.busy=false;}
+}
+
+function vTakes(){
+  const U=S.ui.stock;if(U.take)return vTakeEditor();
+  let h='<div class="row sp"><span class="muted small">A stocktake is a count of what you hold, valued at cost. The latest one on or before each month-end sets your closing stock.</span><button class="btn primary" data-act="take-new">New stocktake</button></div>';
+  const [from]=E.fyRange(S.fy),open=E.addDays(from,-1);
+  if(!S.stocktakes.length)return h+emptyBox('No stocktakes yet','Without one, your P&L counts everything you buy as used up. Add an opening stocktake dated '+dmy(open)+' (the day before this financial year) and then one at each month-end or whenever you count.');
+  const rows=S.stocktakes.slice().sort((a,b)=>b.date.localeCompare(a.date));
+  h+='<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th>Note</th><th class="r">Stock value</th><th></th></tr></thead><tbody>'+rows.map(t=>'<tr><td>'+dmy(t.date)+'</td><td>'+esc(t.note||'')+'<div class="small muted">'+(t.lines||[]).length+' lines</div></td><td class="r">'+money(E.stockTotal(t))+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="take-edit" data-id="'+esc(t.id)+'">Edit</button><button class="btn ghost sm" data-act="take-del" data-id="'+esc(t.id)+'">Delete</button></td></tr>').join('')+'</tbody></table></div>';
+  if(!S.stocktakes.some(t=>t.date<=open))h+='<div class="notice">No stocktake on or before '+dmy(open)+'. If you held stock when this year began, add an opening stocktake with that date so your first month is not overstated.</div>';
+  return h;
+}
+function vTakeEditor(){
+  const d=S.ui.stock.take;
+  let h='<form class="sheet stack" id="take-ed" data-form="take"><h3>'+(d.id?'Edit stocktake':'New stocktake')+'</h3><div class="grid g2"><div class="field"><label for="t-date">Count date</label><input id="t-date" type="date" value="'+esc(d.date)+'"></div><div class="field"><label for="t-note">Note</label><input id="t-note" value="'+esc(d.note)+'" placeholder="e.g. End of October count"></div></div>'+
+   '<div>'+d.lines.map((l,i)=>'<div class="sline" data-i="'+i+'"><select data-sf="group" aria-label="Group">'+STOCK_GROUPS.map(g=>'<option'+(g===l.group?' selected':'')+'>'+g+'</option>').join('')+'</select><input class="sd" data-sf="desc" value="'+esc(l.desc)+'" placeholder="What you counted" aria-label="Description"><input data-sf="value" type="number" step="0.01" min="0" value="'+esc(l.value)+'" placeholder="Value at cost" aria-label="Value at cost"><button class="btn ghost sm" type="button" data-act="take-del-line" data-i="'+i+'" aria-label="Remove line">✕</button></div>').join('')+'</div>'+
+   '<div class="row"><button class="btn sm" type="button" data-act="take-add-line">Add a line</button><button class="btn sm" type="button" data-act="take-fill">Fill from ingredient list</button><span class="muted small" style="margin-left:auto">Total <b id="t-total" class="mono"></b></span></div>'+
+   '<p class="hint">Value each line at what it cost you, ex GST. “Fill from ingredient list” uses each ingredient’s on-hand quantity and current cost, grouped by type, and replaces the lines above.</p>'+
+   '<div class="row"><button class="btn primary" type="submit">Save stocktake</button><button class="btn" type="button" data-act="take-back">Back</button></div></form>';
+  return h;
+}
+function syncTake(){
+  const d=S.ui.stock.take;if(!d||!$('#take-ed'))return;d.date=$('#t-date').value;d.note=$('#t-note').value;
+  document.querySelectorAll('#take-ed .sline[data-i]').forEach(row=>{const l=d.lines[+row.dataset.i];if(!l)return;l.group=row.querySelector('[data-sf="group"]').value;l.desc=row.querySelector('[data-sf="desc"]').value;l.value=row.querySelector('[data-sf="value"]').value;});
+}
+function paintTake(){const d=S.ui.stock.take,el=$('#t-total');if(d&&el)el.textContent=money(d.lines.reduce((a,l)=>a+num(l.value),0));}
+async function saveTake(){
+  if(S.busy)return;syncTake();const d=S.ui.stock.take;
+  if(!d.date){toast('Add the count date.','err');return;}
+  const lines=d.lines.filter(l=>num(l.value)!==0||String(l.desc).trim()).map(l=>({group:l.group,desc:String(l.desc).trim(),value:E.r2(num(l.value))}));
+  if(!lines.length){toast('Add at least one line with a value.','err');return;}
+  const body={date:d.date,note:d.note.trim(),lines};if(d.example)body.example=true;
+  S.busy=true;try{
+    if(!(await put('stocktakes',d.id||newId('stocktakes'),body)))return;
+    S.ui.stock.take=null;S.ui.stock.takeDirty=false;toast('Stocktake saved');render();
+  }finally{S.busy=false;}
+}
+
+/* ---------- reports ---------- */
+const nf=v=>plain.format(v);
+function periodSelect(id,val){return '<select id="'+id+'" style="width:auto"><option value="all"'+(val==='all'?' selected':'')+'>Full year</option>'+[1,2,3,4].map(q=>'<option value="q'+q+'"'+(val==='q'+q?' selected':'')+'>Quarter '+q+' ('+['Jul–Sep','Oct–Dec','Jan–Mar','Apr–Jun'][q-1]+')</option>').join('')+'</select>';}
+function vReports(){
+  const R=S.ui.rep;
+  if(!R.bas)R.bas=S.fy===E.fyStart(S.today)?'q'+E.quarterOf(S.today):'q4';
+  let h='<section class="sect"><header><h2>Reports</h2><div class="seg" role="group" aria-label="Report">'+[['pl','Profit &amp; loss'],['bs','Balance sheet'],['bas','GST &amp; BAS']].map(t=>'<button data-act="rep-tab" data-v="'+t[0]+'" aria-pressed="'+(R.tab===t[0])+'">'+t[1]+'</button>').join('')+'</div></header>';
+  if(R.tab==='pl'){
+    const [from,to]=E.periodRange(S.fy,R.period),pl=E.buildPL(data(),S.settings,from,to,{showAll:R.showAll});
+    h+='<div class="row sp"><div class="row"><span class="label">Period</span>'+periodSelect('rep-period',R.period)+'<label class="check"><input id="rep-showall" type="checkbox"'+(R.showAll?' checked':'')+'>Show empty lines</label></div><button class="btn" data-act="rep-csv">Download CSV</button></div>';
+    h+='<div class="tw"><table class="rep"><thead><tr><th>'+E.fyLabel(S.fy)+' · cash basis · ex GST</th>'+pl.months.map(m=>'<th>'+E.monthLabel(m)+'</th>').join('')+'<th class="total">Total</th></tr></thead><tbody>'+plRows(pl,R.showAll)+'</tbody></table></div>';
+    h+='<div class="strip"><div><span class="label">Gross margin</span><span class="v">'+pct(pl.gpPct,1)+'</span></div><div><span class="label">Operating margin</span><span class="v">'+pct(pl.netPct,1)+'</span></div><div><span class="label">Profit per hour</span><span class="v">'+(pl.perHour==null?'–':money(pl.perHour))+'</span></div><div><span class="label">After paying your time</span><span class="v '+(pl.afterOwner.total<0?'neg':'')+'">'+money(pl.afterOwner.total)+'</span></div></div>';
+    h+='<p class="hint">Income is counted in the month a payment is recorded. Expenses are counted in the month they were paid, less GST you can claim back and any private use. '+(pl.cogs.hasStock?'Cost of goods is purchases plus opening stock less closing stock, from your stocktakes.':'Add stocktakes (Recipes &amp; stock) and the cost of goods will adjust for what is still on the shelf.')+' Equipment appears as depreciation over its useful life. That is a management figure; your accountant will work out tax depreciation. Your own pay is drawings, not an expense.</p>';
+  }else if(R.tab==='bs'){
+    h+=vBalance();
+  }else{
+    const [from,to]=E.periodRange(S.fy,R.bas),b=E.buildBAS(data(),S.settings,from,to);
+    h+='<div class="row sp"><div class="row"><span class="label">Period</span>'+periodSelect('bas-period',R.bas)+'<span class="muted small">'+dmy(from)+' to '+dmy(to)+'</span></div><button class="btn" data-act="rep-csv">Download CSV</button></div>';
+    if(!S.settings.gstRegistered)h+='<div class="notice">GST is switched off in Settings, so these figures show no GST.</div>';
+    const br=(code,label,val,note)=>'<tr><td class="mono" style="white-space:nowrap">'+code+'</td><td>'+label+(note?'<div class="small muted">'+note+'</div>':'')+'</td><td class="r mono">'+nf(val)+'</td></tr>';
+    h+='<div class="tw"><table class="tbl"><thead><tr><th>BAS label</th><th>What it is</th><th class="r">Amount</th></tr></thead><tbody>'+
+      br('G1','Total sales (including GST)',b.g1,'Payments received in this period')+br('G3','GST-free sales',b.g3)+br('1A','GST on sales',b.a1)+
+      br('G10','Capital purchases (including GST)',b.g10)+br('G11','Other purchases (including GST)',b.g11)+br('1B','GST on purchases',b.b1,'Business share only')+
+      '<tr><td class="mono">1A − 1B</td><td><b>'+(b.net>=0?'GST to pay':'GST refund')+'</b></td><td class="r mono"><b class="'+(b.net<0?'pos':'')+'">'+nf(Math.abs(b.net))+'</b></td></tr></tbody></table></div>';
+    h+='<p class="hint">These figures follow your recorded payments, which matches a cash basis GST account. They are a working summary, not a lodgement. Check them against your records or with your BAS agent, and add PAYG instalments, wages and fuel tax credits if they apply to you.</p>';
+  }
+  return h+'</section>';
+}
+function bsDate(){
+  const R=S.ui.rep,[from,to]=E.fyRange(S.fy);let d=R.bsDate;
+  if(!d||d<from||d>to)d=(S.today>=from&&S.today<=to)?S.today:to;return d;
+}
+function vBalance(){
+  const [from]=E.fyRange(S.fy),[,to]=E.fyRange(S.fy),date=bsDate(),d0=E.addDays(from,-1);
+  const cur=E.buildBalance(data(),S.settings,date),prv=E.buildBalance(data(),S.settings,d0);
+  const rows={};const order=[];
+  const take=(bal,col)=>bal.lines.forEach(l=>{const k=l.section+'|'+l.key;if(!rows[k]){rows[k]={section:l.section,group:l.group,label:l.label,cur:0,prv:0,note:''};order.push(k);}rows[k][col]=l.amount;if(col==='cur'||!rows[k].note)rows[k].note=l.note;});
+  take(prv,'prv');take(cur,'cur');
+  const GO={asset:['Cash and other assets','Receivables','Stock on hand','Equipment'],liability:['Tax','Other liabilities']};
+  const sect=(sec,title,tp,tc)=>{
+    const list=order.map(k=>rows[k]).filter(r=>r.section===sec);
+    const groups=GO[sec].filter(g=>list.some(r=>r.group===g)).concat([...new Set(list.map(r=>r.group))].filter(g=>!GO[sec].includes(g)));
+    let o='<tr class="head"><td colspan="4">'+title+'</td></tr>';
+    if(!list.length)o+='<tr class="cat"><td colspan="4" class="muted small">Nothing recorded</td></tr>';
+    groups.forEach(g=>{
+      o+='<tr class="grp"><td colspan="4">'+esc(g)+'</td></tr>';
+      list.filter(r=>r.group===g).forEach(r=>{o+='<tr class="cat"><td>'+esc(r.label)+(r.note?'<div class="small muted">'+esc(r.note)+'</div>':'')+'</td><td>'+nf(r.prv)+'</td><td>'+nf(r.cur)+'</td><td class="total">'+nf(r.cur-r.prv)+'</td></tr>';});
+    });
+    return o+'<tr class="tot"><td>Total '+title.toLowerCase()+'</td><td>'+nf(tp)+'</td><td>'+nf(tc)+'</td><td class="total">'+nf(tc-tp)+'</td></tr>';
+  };
+  let h='<div class="row sp"><div class="row"><label class="label" for="bs-date">As at</label><input id="bs-date" type="date" min="'+from+'" max="'+to+'" value="'+date+'" style="width:auto"></div><button class="btn" data-act="rep-csv">Download CSV</button></div>';
+  h+='<div class="tw"><table class="rep"><thead><tr><th>Balance sheet · management view</th><th>'+dmy(d0)+'</th><th>'+dmy(date)+'</th><th class="total">Change</th></tr></thead><tbody>'+
+    sect('asset','Assets',prv.totalAssets,cur.totalAssets)+sect('liability','Liabilities',prv.totalLiabilities,cur.totalLiabilities)+
+    '<tr class="gtot"><td>Net assets (what the business is worth to you)</td><td>'+nf(prv.netAssets)+'</td><td>'+nf(cur.netAssets)+'</td><td class="total">'+nf(cur.netAssets-prv.netAssets)+'</td></tr></tbody></table></div>';
+  if(!S.stocktakes.length)h+='<div class="notice">No stock is showing because there are no stocktakes yet. Add one under Recipes &amp; stock.</div>';
+  h+='<p class="hint">This is a working view, not a set of accounts. Unpaid invoices count as receivables even though your P&amp;L is cash basis. Stock comes from your latest stocktake. Equipment is cost less the depreciation your P&amp;L has charged. GST is this quarter so far and assumes earlier quarters are paid. Bank and card balances are what you enter below, taken as at their date.</p>';
+  const bl=S.balances.slice().sort((a,b)=>b.date.localeCompare(a.date)||a.name.localeCompare(b.name));
+  const names=[...new Set(S.balances.map(b=>b.name))].concat(['Business bank account','Cash on hand','Credit card','Loan','Owner loan']);
+  h+='<form class="sheet stack" data-form="balance"><h3>Record a balance</h3><div class="grid"><div class="field"><label for="b-side">Type</label><select id="b-side" name="side"><option value="asset">Asset (money you have)</option><option value="liability">Liability (money you owe)</option></select></div><div class="field"><label for="b-name">Name</label><input id="b-name" name="name" required list="b-names" placeholder="e.g. Business bank account"><datalist id="b-names">'+[...new Set(names)].map(n=>'<option value="'+esc(n)+'">').join('')+'</datalist></div><div class="field"><label for="b-amt">Balance</label><input id="b-amt" name="amount" type="number" step="0.01" min="0" required></div><div class="field"><label for="b-date">As at</label><input id="b-date" name="date" type="date" required value="'+esc(S.today)+'"></div></div><div class="row"><button class="btn primary" type="submit">Save balance</button></div><p class="hint">Enter the same name again with a newer date to update it. The sheet uses the latest balance on or before the date you view.</p></form>';
+  if(bl.length)h+='<div class="tw"><table class="tbl"><thead><tr><th>As at</th><th>Name</th><th>Type</th><th class="r">Balance</th><th></th></tr></thead><tbody>'+bl.map(b=>'<tr><td>'+dmy(b.date)+'</td><td>'+esc(b.name)+'</td><td>'+(b.side==='liability'?'Liability':'Asset')+'</td><td class="r">'+money(b.amount)+'</td><td class="r"><button class="btn ghost sm" data-act="bal-del" data-id="'+esc(b.id)+'">Delete</button></td></tr>').join('')+'</tbody></table></div>';
+  return h;
+}
+function plRows(pl,showAll){
+  const cells=(a,t)=>a.map(v=>'<td>'+nf(v)+'</td>').join('')+'<td class="total">'+nf(t)+'</td>';
+  const n=pl.months.length;
+  const head=l=>'<tr class="head"><td colspan="'+(n+2)+'">'+l+'</td></tr>';
+  const cat=c=>'<tr class="cat"><td>'+esc(c.name)+'</td>'+cells(c.vals,c.total)+'</tr>';
+  const tot=(label,o,cls)=>'<tr class="'+(cls||'tot')+'"><td>'+label+'</td>'+cells(o.vals,o.total)+'</tr>';
+  const sec=(label,g,totalLabel)=>(g.cats.length||showAll?head(label)+g.cats.map(cat).join('')+tot(totalLabel,g):'');
+  let h=head('Income')+'<tr class="cat"><td>Sales (ex GST)</td>'+cells(pl.income.vals,pl.income.total)+'</tr>'+tot('Total income',pl.income);
+  const c=pl.cogs;
+  h+=head('Cost of goods sold')+c.cats.map(cat).join('');
+  if(c.hasStock){
+    h+=tot('Total purchases',c.purchases)+'<tr class="cat"><td>Opening stock</td>'+cells(c.opening.vals,c.opening.total)+'</tr><tr class="cat"><td>Less: closing stock</td>'+cells(c.closing.vals,c.closing.total)+'</tr>'+tot('Cost of goods sold',c,'tot');
+  }else h+=tot('Total cost of goods sold',c);
+  h+=tot('Gross profit',pl.grossProfit,'tot');
+  h+=sec('Personnel expenses',pl.personnel,'Total personnel expenses')+sec('Semi-fixed expenses',pl.semi,'Total semi-fixed expenses')+sec('Fixed expenses',pl.fixed,'Total fixed expenses');
+  h+=tot('Total expenses',pl.opex,'gtot')+tot('Operating profit',pl.net,'gtot');
+  h+='<tr class="sub"><td>Hours worked</td>'+pl.hours.vals.map(v=>'<td>'+v.toFixed(1)+'</td>').join('')+'<td class="total">'+pl.hours.total.toFixed(1)+'</td></tr>'+
+    '<tr class="sub"><td>Value of your time</td>'+cells(pl.timeValue.vals,pl.timeValue.total)+'</tr>'+tot('Profit after paying your time',pl.afterOwner);
+  return h;
+}
+function csvOf(rows){return rows.map(r=>r.map(c=>{const s=String(c==null?'':c);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\r\n');}
+function reportCSV(){
+  const R=S.ui.rep;
+  if(R.tab==='pl'){const [f,t]=E.periodRange(S.fy,R.period),pl=E.buildPL(data(),S.settings,f,t,{showAll:R.showAll}),rows=[['Profit and loss, cash basis, ex GST',E.fyLabel(S.fy)].concat(pl.months.map(E.monthLabel),['Total'])];
+    const add=(l,o)=>rows.push([l].concat(o.vals,[o.total]));const sec=(l,g,tl)=>{if(!g.cats.length)return;rows.push([l]);g.cats.forEach(c=>add('  '+c.name,c));add(tl,g);};
+    rows.push(['Income']);add('  Sales',pl.income);add('Total income',pl.income);
+    rows.push(['Cost of goods sold']);pl.cogs.cats.forEach(c=>add('  '+c.name,c));
+    if(pl.cogs.hasStock){add('Total purchases',pl.cogs.purchases);add('  Opening stock',pl.cogs.opening);add('  Less: closing stock',pl.cogs.closing);add('Cost of goods sold',pl.cogs);}else add('Total cost of goods sold',pl.cogs);
+    add('Gross profit',pl.grossProfit);sec('Personnel expenses',pl.personnel,'Total personnel expenses');sec('Semi-fixed expenses',pl.semi,'Total semi-fixed expenses');sec('Fixed expenses',pl.fixed,'Total fixed expenses');
+    add('Total expenses',pl.opex);add('Operating profit',pl.net);add('Hours worked',pl.hours);add('Value of your time',pl.timeValue);add('Profit after paying your time',pl.afterOwner);
+    return {name:'profit-and-loss-'+E.fyLabel(S.fy)+'-'+R.period+'.csv',text:csvOf(rows)};}
+  if(R.tab==='bs'){const date=bsDate(),b=E.buildBalance(data(),S.settings,date),rows=[['Balance sheet (management view)','As at '+date,'Amount']];
+    b.lines.forEach(l=>rows.push([l.section==='asset'?'Asset':'Liability',l.group+' - '+l.label,l.amount]));
+    rows.push(['','Total assets',b.totalAssets],['','Total liabilities',b.totalLiabilities],['','Net assets',b.netAssets]);
+    return {name:'balance-sheet-'+date+'.csv',text:csvOf(rows)};}
+  const [f,t]=E.periodRange(S.fy,R.bas),b=E.buildBAS(data(),S.settings,f,t);
+  return {name:'bas-summary-'+E.fyLabel(S.fy)+'-'+R.bas+'.csv',text:csvOf([['Label','What it is','Amount'],['G1','Total sales (inc GST)',b.g1],['G3','GST-free sales',b.g3],['1A','GST on sales',b.a1],['G10','Capital purchases (inc GST)',b.g10],['G11','Other purchases (inc GST)',b.g11],['1B','GST on purchases',b.b1],['','Net GST (1A less 1B)',b.net]])};
+}
+
+/* ---------- customers & items ---------- */
+function vLists(){
+  const ce=S.ui.lists.custEdit?S.customers.find(c=>c.id===S.ui.lists.custEdit):null,pe=S.ui.lists.prodEdit?S.products.find(c=>c.id===S.ui.lists.prodEdit):null;
+  const c=ce||{name:'',email:'',phone:'',abn:'',address:''},p=pe||{name:'',price:'',cost:'',gst:true,recipeId:''};
+  let h='<div class="stack"><section class="sect"><header><h2>Customers</h2><span class="muted small">'+S.customers.length+' saved</span></header>'+
+   '<form class="sheet stack" data-form="customer"><h3>'+(ce?'Edit customer':'Add a customer')+'</h3><div class="grid"><div class="field"><label for="c-name">Name</label><input id="c-name" name="name" required value="'+esc(c.name)+'"></div><div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" value="'+esc(c.email)+'"></div><div class="field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" value="'+esc(c.phone)+'"></div><div class="field"><label for="c-abn">ABN</label><input id="c-abn" name="abn" value="'+esc(c.abn)+'"></div></div><div class="field"><label for="c-addr">Address</label><textarea id="c-addr" name="address">'+esc(c.address)+'</textarea></div><div class="row"><button class="btn primary" type="submit">'+(ce?'Save changes':'Add customer')+'</button>'+(ce?'<button class="btn" type="button" data-act="cust-cancel">Cancel</button>':'')+'</div></form>';
+  if(S.customers.length){
+    const owed={};E.receivables(S.docs,S.settings,S.today).list.forEach(x=>{owed[x.d.customerId]=(owed[x.d.customerId]||0)+x.t.balance;});
+    h+='<div class="tw"><table class="tbl"><thead><tr><th>Name</th><th>Contact</th><th class="r">Owes you</th><th></th></tr></thead><tbody>'+S.customers.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(x=>'<tr><td>'+esc(x.name)+'</td><td class="small">'+esc([x.email,x.phone].filter(Boolean).join(' · '))+'</td><td class="r">'+(owed[x.id]?money(owed[x.id]):'')+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="cust-edit" data-id="'+esc(x.id)+'">Edit</button><button class="btn ghost sm" data-act="cust-del" data-id="'+esc(x.id)+'">Delete</button></td></tr>').join('')+'</tbody></table></div>';
+  }
+  h+='</section><section class="sect"><header><h2>Items you sell</h2><span class="muted small">'+S.products.length+' saved</span></header>'+
+   '<form class="sheet stack" data-form="product"><h3>'+(pe?'Edit item':'Add an item')+'</h3><div class="grid"><div class="field"><label for="p-name">Name</label><input id="p-name" name="name" required value="'+esc(p.name)+'"></div><div class="field"><label for="p-price">Sell price'+(S.settings.gstRegistered?(S.settings.pricesIncludeGst?' (incl. GST)':' (ex GST)'):'')+'</label><input id="p-price" name="price" type="number" step="0.01" min="0" value="'+esc(p.price)+'"></div><div class="field"><label for="p-recipe">Recipe</label><select id="p-recipe" name="recipeId"><option value="">None, enter a cost</option>'+S.recipes.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(r=>'<option value="'+esc(r.id)+'"'+(r.id===p.recipeId?' selected':'')+'>'+esc(r.name)+'</option>').join('')+'</select></div><div class="field"><label for="p-cost">Your cost (ex GST)</label><input id="p-cost" name="cost" type="number" step="0.01" min="0" value="'+esc(p.recipeId?productCost(p):p.cost)+'"'+(p.recipeId?' disabled':'')+'>'+(p.recipeId?'<span class="hint">Worked out from the recipe, so it follows ingredient prices.</span>':'')+'</div>'+(S.settings.gstRegistered?'<div class="field"><label>GST</label><label class="check"><input name="gst" type="checkbox"'+(p.gst?' checked':'')+'>Charge GST</label></div>':'')+'</div><p class="hint">Some food is GST-free and some is not (confectionery usually is taxable). Untick GST on any item that is GST-free and check the rules with the ATO or your accountant. The cost lets each invoice show your estimated margin. Your P&amp;L cost of goods still comes from the stock purchases you enter under Expenses.</p><div class="row"><button class="btn primary" type="submit">'+(pe?'Save changes':'Add item')+'</button>'+(pe?'<button class="btn" type="button" data-act="prod-cancel">Cancel</button>':'')+'</div></form>';
+  if(S.products.length)h+='<div class="tw"><table class="tbl"><thead><tr><th>Item</th><th class="r">Price</th><th class="r">Cost</th><th class="r">Margin</th><th></th></tr></thead><tbody>'+S.products.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(x=>{const pr=+x.price||0,co=productCost(x),net=(S.settings.pricesIncludeGst&&x.gst&&S.settings.gstRegistered)?pr/(1+S.settings.gstRate/100):pr;return '<tr><td>'+esc(x.name)+'</td><td class="r">'+money(pr)+'</td><td class="r">'+(co?money(co):'')+'</td><td class="r">'+(co&&net>0?pct((net-co)/net):'')+'</td><td class="r" style="white-space:nowrap"><button class="btn ghost sm" data-act="prod-edit" data-id="'+esc(x.id)+'">Edit</button><button class="btn ghost sm" data-act="prod-del" data-id="'+esc(x.id)+'">Delete</button></td></tr>';}).join('')+'</tbody></table></div>';
+  return h+'</section></div>';
+}
+
+/* ---------- settings ---------- */
+function vSettings(){
+  const s=S.settings,f=(id,label,val,extra)=>'<div class="field"><label for="s-'+id+'">'+label+'</label><input id="s-'+id+'" name="'+id+'" value="'+esc(val)+'" '+(extra||'')+'></div>';
+  const chk=(id,label,v)=>'<div class="field"><label class="check"><input name="'+id+'" type="checkbox"'+(v?' checked':'')+'>'+label+'</label></div>';
+  let h='<div class="stack"><section class="sect"><header><h2>Settings</h2></header><form class="sheet stack" data-form="settings"><h3>Your business</h3><div class="grid g2">'+f('businessName','Business or trading name',s.businessName)+f('abn','ABN',s.abn)+f('email','Email on invoices',s.email,'type="email"')+f('phone','Phone',s.phone)+'</div><div class="field"><label for="s-address">Address</label><textarea id="s-address" name="address">'+esc(s.address)+'</textarea></div>'+
+   '<h3>Tax</h3><div class="grid">'+chk('gstRegistered','Registered for GST',s.gstRegistered)+f('gstRate','GST rate %',s.gstRate,'type="number" step="0.1" min="0"')+chk('pricesIncludeGst','New documents use GST-inclusive prices',s.pricesIncludeGst)+'</div><p class="hint">Reports use cash basis: income and GST count when payment is recorded, expenses when paid. Your financial year runs 1 July to 30 June.</p>'+
+   '<h3>Invoices</h3><div class="grid">'+f('invoicePrefix','Invoice prefix',s.invoicePrefix)+f('quotePrefix','Quote prefix',s.quotePrefix)+f('termsDays','Payment terms (days)',s.termsDays,'type="number" min="0"')+f('bankName','Bank name',s.bankName)+f('bsb','BSB',s.bsb)+f('accountNo','Account number',s.accountNo)+'</div><div class="field"><label for="s-invoiceFooter">Footer note</label><input id="s-invoiceFooter" name="invoiceFooter" value="'+esc(s.invoiceFooter)+'"></div>'+
+   '<h3>Time and travel</h3><div class="grid">'+f('labourRate','Your hourly value ($)',s.labourRate,'type="number" step="0.01" min="0"')+f('kmRate','Cents-per-km rate ($ per km)',s.kmRate,'type="number" step="0.01" min="0"')+chk('claimKm','Claim travel by the km rate',s.claimKm)+'</div><p class="hint">Check the current ATO cents-per-km rate and its 5,000 km limit before you rely on the km claim.</p><div><button class="btn primary" type="submit">Save settings</button></div></form></section>';
+  const nEx=COLLS.map(k=>S[k]).reduce((a,l)=>a+l.filter(x=>x.example).length,0);
+  h+='<section class="sect"><header><h2>Your data</h2></header><div class="sheet stack"><div class="row"><button class="btn" data-act="export-json">Download full backup (JSON)</button><button class="btn" data-act="export-csv" data-k="sales">Sales (CSV)</button><button class="btn" data-act="export-csv" data-k="payments">Payments (CSV)</button><button class="btn" data-act="export-csv" data-k="expenses">Expenses (CSV)</button><button class="btn" data-act="export-csv" data-k="time">Time &amp; travel (CSV)</button></div>'+
+   '<div class="field"><label for="restore-file">Restore from a backup file</label><input id="restore-file" type="file" accept="application/json,.json">'+(S.ui.restore?'<div class="row" style="margin-top:8px"><span class="small">Backup holds '+S.ui.restore.count+' records. Matching records are overwritten, nothing else is removed.</span><button class="btn primary sm" data-act="restore-go">Restore now</button><button class="btn sm" data-act="restore-cancel">Cancel</button></div>':'')+'</div>'+
+   '<div class="row">'+(nEx?'<button class="btn" data-act="clear-examples">Remove example data ('+nEx+' records)</button>':'<button class="btn" data-act="load-examples">Load example data</button>')+'</div><p class="hint">Download a backup now and then. Your books are stored on your own server, which also keeps a nightly snapshot. A backup file is your own extra copy.</p></div></section></div>';
+  return h;
+}
+async function saveSettings(form){
+  const fd=new FormData(form),g=n=>String(fd.get(n)||'').trim(),b=n=>!!form.elements[n]&&form.elements[n].checked;
+  const body={businessName:g('businessName'),abn:g('abn'),address:g('address'),email:g('email'),phone:g('phone'),gstRegistered:b('gstRegistered'),gstRate:num(fd.get('gstRate')),pricesIncludeGst:b('pricesIncludeGst'),termsDays:Math.max(0,Math.round(num(fd.get('termsDays')))),
+    invoicePrefix:g('invoicePrefix'),quotePrefix:g('quotePrefix'),labourRate:num(fd.get('labourRate')),kmRate:num(fd.get('kmRate')),claimKm:b('claimKm'),bankName:g('bankName'),bsb:g('bsb'),accountNo:g('accountNo'),invoiceFooter:g('invoiceFooter')};
+  if(await put('settings','business',body))toast('Settings saved');
+}
+
+/* ---------- data: examples, exports, restore ---------- */
+async function inChunks(items,fn){for(let i=0;i<items.length;i+=5){await Promise.all(items.slice(i,i+5).map(fn));}}
+async function loadExamples(){
+  if(S.busy)return;S.busy=true;
+  try{
+    const ex=E.exampleData(S.today),jobs=[];
+    for(const k of COLLS)(ex[k]||[]).forEach(x=>jobs.push([k,x]));
+    await inChunks(jobs,j=>put(j[0],j[1].id,j[1]));
+    toast('Example data loaded. Remove it in Settings when you are ready.');
+  }finally{S.busy=false;}
+}
+async function clearExamples(){
+  if(S.busy)return;S.busy=true;
+  try{const jobs=[];for(const k of COLLS)S[k].filter(x=>x.example).forEach(x=>jobs.push([k,x.id]));
+    await inChunks(jobs,j=>del(j[0],j[1]));toast('Example data removed');}finally{S.busy=false;}
+}
+function exportCSV(k){
+  const s=S.settings;let rows,name;
+  if(k==='sales'){rows=[['Number','Type','Customer','Issued','Due','Status','Subtotal','GST','Total','Paid','Balance']];S.docs.forEach(d=>{const t=E.docTotals(d,s);rows.push([d.number,d.type,d.customerName,d.issued,d.due,E.docStatus(d,t,S.today),t.sub,t.gst,t.total,t.paid,t.balance]);});name='sales.csv';}
+  else if(k==='payments'){rows=[['Date','Invoice','Customer','Method','Amount received','GST in amount','Ex GST']];E.incomeEvents(S.docs,s).sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>rows.push([e.date,e.number,e.customer,e.method,e.gross,e.gst,e.ex]));name='payments-received.csv';}
+  else if(k==='expenses'){rows=[['Date','Supplier','Description','Type','Category','Amount paid','Business use %','GST claimable','Deductible ex GST','Receipt']];S.expenses.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{const c=E.expenseCalc(e,s);rows.push([e.date,e.supplier,e.desc,e.cls,e.category,e.amount,c.pct,c.gstClaim,c.net,e.receiptName||'']);});name='expenses.csv';}
+  else{rows=[['Date','Type','Hours','Km','Hourly value','Details','Customer']];S.time.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(t=>rows.push([t.date,t.kind,t.hours,t.km,t.rate==null||t.rate===''?s.labourRate:t.rate,t.note,t.customer]));name='time-and-travel.csv';}
+  saveFile(name,csvOf(rows));
+}
+function exportJSON(){
+  const strip=a=>a.map(x=>x);const o={app:'sole-trader-books',version:2,exported:S.today,settings:S.settings};COLLS.forEach(k=>{o[k]=strip(S[k]);});saveFile('books-backup-'+S.today+'.json',JSON.stringify(o,null,1));
+}
+function readBackup(file){
+  const r=new FileReader();
+  r.onload=()=>{try{const j=JSON.parse(r.result);if(j.app!=='sole-trader-books')throw new Error('x');
+    const count=COLLS.reduce((a,k)=>a+(Array.isArray(j[k])?j[k].length:0),0);S.ui.restore={json:j,count};render();}
+    catch(e){toast('That file is not a backup from this page.','err');}};
+  r.readAsText(file);
+}
+async function restoreGo(){
+  const rs=S.ui.restore;if(!rs||S.busy)return;S.busy=true;
+  try{const jobs=[];for(const k of COLLS)(rs.json[k]||[]).forEach(x=>{if(x&&x.id)jobs.push([k,x.id,x]);});
+    await inChunks(jobs,j=>put(j[0],j[1],j[2]));
+    if(rs.json.settings)await put('settings','business',Object.assign({},E.DEFAULTS,rs.json.settings));
+    S.ui.restore=null;toast('Backup restored');render();}finally{S.busy=false;}
+}
+
+/* ---------- render + events ---------- */
+function render(){
+  const main=$('#main');renderHeader();
+  if(S.dbChecked&&!S.db){main.innerHTML='<div class="notice">The books database could not be reached. Check that the server is running, then reload this page.</div>';return;}
+  if(S.db&&!allLoaded()){main.innerHTML='<p class="muted">Loading your books…</p>';return;}
+  const fn={overview:vOverview,sales:vSales,expenses:vExpenses,stock:vStock,time:vTime,reports:vReports,lists:vLists,settings:vSettings}[S.view]||vOverview;
+  main.innerHTML=fn();
+  if(S.view==='expenses')paintExpensePreview();
+  if(S.view==='stock'){paintIngPreview();paintRecipe();paintTake();}
+}
+function setView(){
+  const v=(location.hash||'').replace('#','');S.view=VIEWS.includes(v)?v:'overview';
+  if(S.view!=='sales'&&S.ui.sales.draft&&!S.ui.sales.dirty)S.ui.sales.draft=null;
+  if(S.view!=='stock'){if(!S.ui.stock.recipeDirty)S.ui.stock.recipe=null;if(!S.ui.stock.takeDirty)S.ui.stock.take=null;}
+  render();
+}
+window.addEventListener('hashchange',setView);
+window.addEventListener('resize',()=>{clearTimeout(window.__rz);window.__rz=setTimeout(()=>{if(S.view==='overview')scheduleRender();},200);});
+
+const ACT={
+  'load-examples':()=>loadExamples(),'clear-examples':()=>clearExamples(),
+  'new-doc':el=>startDoc(el.dataset.type),
+  'open-doc':el=>openDoc(el.dataset.id),
+  'sales-filter':el=>{S.ui.sales.filter=el.dataset.v;render();},
+  'doc-back':el=>{if(S.ui.sales.dirty&&!armed(el,'Discard changes?'))return;S.ui.sales.draft=null;S.ui.sales.dirty=false;render();},
+  'doc-save':()=>saveDraft().then(ok=>{if(ok)render();}),
+  'doc-add-line':()=>{syncDraftFromDom();S.ui.sales.draft.lines.push(blankLine());S.ui.sales.dirty=true;render();},
+  'doc-del-line':el=>{syncDraftFromDom();const d=S.ui.sales.draft;d.lines.splice(+el.dataset.i,1);if(!d.lines.length)d.lines.push(blankLine());S.ui.sales.dirty=true;render();},
+  'doc-add-pay':async()=>{
+    const d=S.ui.sales.draft;syncDraftFromDom();const amt=num($('#pay-amt').value),date=$('#pay-date').value;
+    if(!date||!amt){toast('Add a date and an amount.','err');return;}
+    d.payments.push({id:'p'+Math.random().toString(36).slice(2,8),date,amount:amt,method:$('#pay-method').value});
+    const stSel=$('#ed-status');if(d.status==='draft'){d.status='issued';if(stSel)stSel.value='issued';}
+    if(await saveDraft({quiet:true})){toast('Payment recorded');render();}
+  },
+  'doc-del-pay':async el=>{const d=S.ui.sales.draft;syncDraftFromDom();d.payments=d.payments.filter(p=>p.id!==el.dataset.pid);if(await saveDraft({quiet:true})){toast('Payment removed');render();}},
+  'doc-convert':async()=>{
+    const q=S.ui.sales.draft;if(!(await saveDraft({quiet:true})))return;
+    const issued=S.today,inv={type:'invoice',number:E.nextNumber(S.docs,'invoice',S.settings.invoicePrefix),customerId:q.customerId,customerName:q.customerName,issued,due:E.addDays(issued,+S.settings.termsDays||0),status:'draft',taxMode:q.taxMode,lines:JSON.parse(JSON.stringify(q.lines)),notes:'',payments:[],fromQuote:q.id};
+    const id=newId('docs');if(!(await put('docs',id,inv)))return;
+    const qb=Object.assign({},S.docs.find(x=>x.id===q.id)||{},{status:'invoiced',invoiceId:id});await put('docs',q.id,qb);
+    toast('Invoice '+inv.number+' created from the quote');S.ui.sales.draft=Object.assign({id,dueAuto:false},inv);S.ui.sales.dirty=false;render();
+  },
+  'doc-download':async()=>{const d=S.ui.sales.draft;syncDraftFromDom();await saveFile((d.number||'document').replace(/[^\w.-]+/g,'_')+'.html',invoiceHTML(d));},
+  'doc-delete':async el=>{if(!armed(el,'Click again to delete'))return;const d=S.ui.sales.draft;if(await del('docs',d.id)){S.ui.sales.draft=null;S.ui.sales.dirty=false;toast('Deleted '+d.number);render();}},
+  'exp-filter':el=>{S.ui.exp.cls=el.dataset.v;render();},
+  'exp-more':()=>{S.ui.exp.limit+=150;render();},
+  'exp-edit':el=>{S.ui.exp.edit=el.dataset.id;render();window.scrollTo(0,0);},
+  'exp-cancel':()=>{S.ui.exp.edit=null;render();},
+  'exp-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('expenses',el.dataset.id)){if(S.ui.exp.edit===el.dataset.id)S.ui.exp.edit=null;toast('Expense deleted');}},
+  'time-kind':el=>{const f=$('form[data-form="time"]');const keep=f?{date:f.elements.date.value,hours:f.elements.hours.value,note:f.elements.note.value}:null;S.ui.time.kind=el.dataset.v;if(S.ui.time.edit)S.ui.time.edit=null;render();if(keep){const g=$('form[data-form="time"]');g.elements.date.value=keep.date;g.elements.hours.value=keep.hours;g.elements.note.value=keep.note;}},
+  'time-edit':el=>{S.ui.time.edit=el.dataset.id;render();window.scrollTo(0,0);},
+  'time-cancel':()=>{S.ui.time.edit=null;render();},
+  'time-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('time',el.dataset.id)){if(S.ui.time.edit===el.dataset.id)S.ui.time.edit=null;toast('Entry deleted');}},
+  'rep-tab':el=>{S.ui.rep.tab=el.dataset.v;render();},
+  'to-bas':()=>{S.ui.rep.tab='bas';},
+  'rep-csv':()=>{const r=reportCSV();saveFile(r.name,r.text);},
+  'cust-edit':el=>{S.ui.lists.custEdit=el.dataset.id;render();window.scrollTo(0,0);},'cust-cancel':()=>{S.ui.lists.custEdit=null;render();},
+  'cust-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('customers',el.dataset.id))toast('Customer deleted. Their past documents keep the name.');},
+  'prod-edit':el=>{S.ui.lists.prodEdit=el.dataset.id;render();window.scrollTo(0,0);},'prod-cancel':()=>{S.ui.lists.prodEdit=null;render();},
+  'prod-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('products',el.dataset.id))toast('Item deleted');},
+  'stock-tab':el=>{S.ui.stock.tab=el.dataset.v;render();},
+  'ing-edit':el=>{S.ui.stock.ingEdit=el.dataset.id;render();window.scrollTo(0,0);},'ing-cancel':()=>{S.ui.stock.ingEdit=null;render();},
+  'ing-del':async el=>{
+    const used=S.recipes.filter(r=>(r.lines||[]).some(l=>l.ingredientId===el.dataset.id));
+    if(used.length){toast('Used in '+used.map(r=>r.name).join(', ')+'. Remove it from the recipe first.','err');return;}
+    if(!armed(el,'Click again to delete'))return;if(await del('ingredients',el.dataset.id)){if(S.ui.stock.ingEdit===el.dataset.id)S.ui.stock.ingEdit=null;toast('Ingredient deleted');}},
+  'recipe-new':()=>{S.ui.stock.recipe=blankRecipe();S.ui.stock.recipeDirty=false;render();},
+  'recipe-edit':el=>{const r=S.recipes.find(x=>x.id===el.dataset.id);if(!r)return;S.ui.stock.recipe=JSON.parse(JSON.stringify(r));if(!S.ui.stock.recipe.lines.length)S.ui.stock.recipe.lines.push(blankRLine());S.ui.stock.recipeDirty=false;render();window.scrollTo(0,0);},
+  'recipe-back':el=>{if(S.ui.stock.recipeDirty&&!armed(el,'Discard changes?'))return;S.ui.stock.recipe=null;S.ui.stock.recipeDirty=false;render();},
+  'recipe-add-line':()=>{syncRecipe();S.ui.stock.recipe.lines.push(blankRLine());S.ui.stock.recipeDirty=true;render();},
+  'recipe-del-line':el=>{syncRecipe();const d=S.ui.stock.recipe;d.lines.splice(+el.dataset.i,1);if(!d.lines.length)d.lines.push(blankRLine());S.ui.stock.recipeDirty=true;render();},
+  'recipe-del':async el=>{
+    const pr=S.products.filter(p=>p.recipeId===el.dataset.id);
+    if(pr.length){toast('Used by '+pr.map(p=>p.name).join(', ')+'. Unlink it in Customers & items first.','err');return;}
+    if(!armed(el,'Click again to delete'))return;if(await del('recipes',el.dataset.id))toast('Recipe deleted');},
+  'take-new':()=>{const [f]=E.fyRange(S.fy);S.ui.stock.take={date:S.today,note:'',lines:[{group:'Ingredients',desc:'',value:''}]};S.ui.stock.takeDirty=false;render();},
+  'take-edit':el=>{const t=S.stocktakes.find(x=>x.id===el.dataset.id);if(!t)return;S.ui.stock.take=JSON.parse(JSON.stringify(t));S.ui.stock.takeDirty=false;render();window.scrollTo(0,0);},
+  'take-back':el=>{if(S.ui.stock.takeDirty&&!armed(el,'Discard changes?'))return;S.ui.stock.take=null;S.ui.stock.takeDirty=false;render();},
+  'take-add-line':()=>{syncTake();S.ui.stock.take.lines.push({group:'Ingredients',desc:'',value:''});S.ui.stock.takeDirty=true;render();},
+  'take-del-line':el=>{syncTake();const d=S.ui.stock.take;d.lines.splice(+el.dataset.i,1);if(!d.lines.length)d.lines.push({group:'Ingredients',desc:'',value:''});S.ui.stock.takeDirty=true;render();},
+  'take-fill':()=>{syncTake();const by={};S.ingredients.forEach(i=>{const v=E.unitCost(i)*(+i.onHand||0);if(!v)return;const g=i.category==='Packaging'?'Packaging':i.category==='Decoration'?'Decorations':'Ingredients';by[g]=(by[g]||0)+v;});
+    const keys=Object.keys(by);if(!keys.length){toast('No on-hand quantities on your ingredients yet.','err');return;}
+    S.ui.stock.take.lines=keys.map(g=>({group:g,desc:'From ingredient list',value:E.r2(by[g])}));S.ui.stock.takeDirty=true;render();},
+  'take-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('stocktakes',el.dataset.id))toast('Stocktake deleted');},
+  'bal-del':async el=>{if(!armed(el,'Click again to delete'))return;if(await del('balances',el.dataset.id))toast('Balance deleted');},
+  'export-json':()=>exportJSON(),'export-csv':el=>exportCSV(el.dataset.k),
+  'restore-go':()=>restoreGo(),'restore-cancel':()=>{S.ui.restore=null;render();}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||!$('#main').contains(el))return;if(e.target.closest('a[href]')&&el.tagName==='TR')return;const fn=ACT[el.dataset.act];if(fn)fn(el,e);});
+document.addEventListener('submit',e=>{
+  const f=e.target.closest('form[data-form]');if(!f)return;e.preventDefault();const k=f.dataset.form;
+  if(k==='expense')saveExpense(f);else if(k==='ingredient')saveIngredient(f);else if(k==='recipe')saveRecipe();else if(k==='take')saveTake();
+  else if(k==='balance'){const fd=new FormData(f),name=String(fd.get('name')||'').trim(),amount=num(fd.get('amount'));if(!name||!fd.get('date')){toast('Add a name and a date.','err');return;}
+    put('balances',newId('balances'),{date:fd.get('date'),side:fd.get('side'),name,amount}).then(ok=>{if(ok){toast('Balance saved');render();}});}
+  else if(k==='time')saveTime(f);else if(k==='settings')saveSettings(f);
+  else if(k==='customer'){const fd=new FormData(f),ed=S.ui.lists.custEdit?S.customers.find(x=>x.id===S.ui.lists.custEdit):null,g=n=>String(fd.get(n)||'').trim();
+    put('customers',ed?ed.id:newId('customers'),Object.assign({},ed&&ed.example?{example:true}:{},{name:g('name'),email:g('email'),phone:g('phone'),abn:g('abn'),address:g('address')})).then(ok=>{if(ok){S.ui.lists.custEdit=null;toast('Customer saved');render();}});}
+  else if(k==='product'){const fd=new FormData(f),ed=S.ui.lists.prodEdit?S.products.find(x=>x.id===S.ui.lists.prodEdit):null;
+    put('products',ed?ed.id:newId('products'),Object.assign({},ed&&ed.example?{example:true}:{},{name:String(fd.get('name')||'').trim(),price:num(fd.get('price')),recipeId:String(fd.get('recipeId')||''),cost:fd.get('recipeId')?'':(fd.get('cost')===''?'':num(fd.get('cost'))),gst:S.settings.gstRegistered?!!f.elements.gst&&f.elements.gst.checked:true})).then(ok=>{if(ok){S.ui.lists.prodEdit=null;toast('Item saved');render();}});}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='sales-q'){S.ui.sales.q=t.value;const p=t.selectionStart;render();const n=$('#sales-q');if(n){n.focus();n.setSelectionRange(p,p);}return;}
+  if(t.id==='exp-q'){S.ui.exp.q=t.value;const p=t.selectionStart;render();const n=$('#exp-q');if(n){n.focus();n.setSelectionRange(p,p);}return;}
+  if(S.view==='expenses'&&/^x-(amt|pct|gst)$/.test(t.id))paintExpensePreview();
+  if(S.view==='stock'){
+    if(/^i-(size|price)$/.test(t.id)){paintIngPreview();return;}
+    if(t.closest('#recipe-ed')){syncRecipe();S.ui.stock.recipeDirty=true;paintRecipe();return;}
+    if(t.closest('#take-ed')){syncTake();S.ui.stock.takeDirty=true;paintTake();return;}
+  }
+  const d=S.ui.sales.draft;if(!d||S.view!=='sales')return;
+  const row=t.closest('.line[data-i]');
+  if(row&&t.dataset.lf){const l=d.lines[+row.dataset.i];if(!l)return;const k=t.dataset.lf;l[k]=k==='gst'?t.checked:t.value;if(k==='desc'&&l.productId&&t.value!==l.desc){l.productId='';}S.ui.sales.dirty=true;paintTotals();return;}
+  if(/^ed-/.test(t.id)){S.ui.sales.dirty=true;syncDraftFromDom();
+    if(t.id==='ed-issued'&&d.dueAuto&&d.type==='invoice'){d.due=E.addDays(d.issued,+S.settings.termsDays||0);$('#ed-due').value=d.due;}
+    if(t.id==='ed-due')d.dueAuto=false;paintTotals();}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='fysel'){S.fy=+t.value;S.ui.rep.bas=null;S.ui.rep.bsDate=null;render();return;}
+  if(t.id==='rep-period'){S.ui.rep.period=t.value;render();return;}
+  if(t.id==='bas-period'){S.ui.rep.bas=t.value;render();return;}
+  if(t.id==='x-cls'){const dl=$('#catlist');if(dl)dl.innerHTML=catOptions(t.value);const lw=$('#x-lifewrap');if(lw)lw.hidden=t.value!=='capital';
+    const g=$('#x-gst');if(g&&!S.ui.exp.edit&&t.value==='personnel'){g.checked=false;}paintExpensePreview();return;}
+  if(t.id==='bs-date'){S.ui.rep.bsDate=t.value||null;render();return;}
+  if(t.id==='rep-showall'){S.ui.rep.showAll=t.checked;render();return;}
+  if(t.id==='i-unit'){paintIngPreview();return;}
+  if(t.id==='p-recipe'){const c=$('#p-cost');if(c){const r=S.recipes.find(x=>x.id===t.value);c.disabled=!!r;if(r)c.value=productCost({recipeId:r.id});}return;}
+  if(S.view==='stock'&&t.closest('#recipe-ed')&&t.dataset.rf==='ingredientId'){syncRecipe();S.ui.stock.recipeDirty=true;render();return;}
+  if(t.id==='restore-file'&&t.files&&t.files[0]){readBackup(t.files[0]);return;}
+  const d=S.ui.sales.draft;if(!d||S.view!=='sales')return;
+  const row=t.closest('.line[data-i]');
+  if(row&&t.dataset.lf==='desc'){const l=d.lines[+row.dataset.i],p=S.products.find(x=>x.name===t.value);
+    if(l&&p&&!l.productId){syncDraftFromDom();l.productId=p.id;l.price=p.price;l.gst=!!p.gst;l.cost=p.recipeId?productCost(p):(p.cost===undefined?'':p.cost);S.ui.sales.dirty=true;render();}return;}
+  if(t.id==='ed-tax'){syncDraftFromDom();S.ui.sales.dirty=true;render();}
+});
+
+/* ---------- start ---------- */
+(async function init(){
+  const use=window.claude&&window.claude.use?window.claude.use.bind(window.claude):async()=>null;
+  setView();
+  const [db,dl,assets]=await Promise.all([use('db'),use('downloads'),use('assets')]);
+  S.db=db;S.dl=dl;S.assets=assets;S.dbChecked=true;
+  if(db)subscribe();render();
+})();
+window.__books={S,E,render,ACT};
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,17 @@
+services:
+  books:
+    build: .
+    container_name: little-honey-books
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD in the .env file}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}   # set to true once it is served over https
+      TRUST_PROXY: ${TRUST_PROXY:-false}       # set to true when behind a reverse proxy
+      TZ: Australia/Perth
+    volumes:
+      - books-data:/data
+
+volumes:
+  books-data:
