@@ -3,7 +3,7 @@
 # Usage: ./scripts/backup.sh [destination-folder]      (default: ./backups)
 set -eu
 DEST="${1:-./backups}"
-VOLUME="${VOLUME:-little-honey-books_books-data}"
+VOLUME="${VOLUME:-little-honey-treats_books-data}"
 mkdir -p "$DEST"
 STAMP="$(date +%Y-%m-%d-%H%M)"
 docker run --rm -v "$VOLUME":/data:ro -v "$(cd "$DEST" && pwd)":/out alpine \

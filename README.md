@@ -1,4 +1,4 @@
-# Little Honey Treats books
+# Little Honey Treats
 
 Self-hosted bookkeeping for Little Honey Treats: invoices and quotes, expenses with receipts, recipes and stock, time and travel, P&L, BAS summary. Cash basis, Australian financial year.
 
@@ -7,16 +7,16 @@ One small Node server (no npm dependencies, needs Node 22.13+), a SQLite databas
 ## Run it on server1 with Docker
 
 ```sh
-git clone <your-repo-url> little-honey-books
-cd little-honey-books
+git clone <your-repo-url> little-honey-treats
+cd little-honey-treats
 cp .env.example .env        # then edit .env and set APP_PASSWORD
 docker compose up -d --build
 ```
 
-Open `http://server1:3100` and sign in (change `HOST_PORT` in `.env` if 3100 is taken). Data lives in the Docker volume `little-honey-books_books-data`, so rebuilding or updating the container never touches it.
+Open `http://server1:3100` and sign in (change `HOST_PORT` in `.env` if 3100 is taken). Data lives in the Docker volume `little-honey-treats_books-data`, so rebuilding or updating the container never touches it.
 
 ### Kept separate from your other business on server1
-This stack shares nothing with anything else on the host: its own compose project (`little-honey-books`), container, network (`little-honey-books_net`), volume, image, database, password and port. `docker compose down` here only affects this app. Do not use `docker compose down -v`, which would delete this app's data volume.
+This stack shares nothing with anything else on the host: its own compose project (`little-honey-treats`), container, network (`little-honey-treats_net`), volume, image, database, password and port. `docker compose down` here only affects this app. Do not use `docker compose down -v`, which would delete this app's data volume.
 
 Update later: `git pull && docker compose up -d --build`
 
@@ -29,7 +29,7 @@ Put it behind your existing proxy for HTTPS, then in `.env` set `COOKIE_SECURE=t
 - Settings > Your data > "Download full backup" still works too, but it does not include receipt files.
 
 Restore from a tarball: stop the container, then
-`docker run --rm -v little-honey-books_books-data:/data -v "$PWD":/in alpine sh -c "cd /data && tar xzf /in/books-DATE.tar.gz"`
+`docker run --rm -v little-honey-treats_books-data:/data -v "$PWD":/in alpine sh -c "cd /data && tar xzf /in/books-DATE.tar.gz"`
 
 ## Run without Docker
 ```sh

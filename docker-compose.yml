@@ -1,12 +1,12 @@
 # Fully self-contained: own project name, container, network, volume and port.
 # Nothing here is shared with any other stack running on the same Docker host.
-name: little-honey-books
+name: little-honey-treats
 
 services:
   books:
     build: .
-    image: little-honey-books:latest
-    container_name: little-honey-books
+    image: little-honey-treats:latest
+    container_name: little-honey-treats
     restart: unless-stopped
     ports:
       - "${BIND_ADDRESS:-0.0.0.0}:${HOST_PORT:-3100}:3000"
@@ -22,8 +22,8 @@ services:
 
 networks:
   honey:
-    name: little-honey-books_net
+    name: little-honey-treats_net
 
 volumes:
   books-data:
-    name: little-honey-books_books-data
+    name: little-honey-treats_books-data
