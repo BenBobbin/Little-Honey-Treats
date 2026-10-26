@@ -13,7 +13,10 @@ cp .env.example .env        # then edit .env and set APP_PASSWORD
 docker compose up -d --build
 ```
 
-Open `http://server1:3000` and sign in. Data lives in the Docker volume `little-honey-books_books-data`, so rebuilding or updating the container never touches it.
+Open `http://server1:3100` and sign in (change `HOST_PORT` in `.env` if 3100 is taken). Data lives in the Docker volume `little-honey-books_books-data`, so rebuilding or updating the container never touches it.
+
+### Kept separate from your other business on server1
+This stack shares nothing with anything else on the host: its own compose project (`little-honey-books`), container, network (`little-honey-books_net`), volume, image, database, password and port. `docker compose down` here only affects this app. Do not use `docker compose down -v`, which would delete this app's data volume.
 
 Update later: `git pull && docker compose up -d --build`
 

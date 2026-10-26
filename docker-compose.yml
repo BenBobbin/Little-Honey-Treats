@@ -1,10 +1,15 @@
+# Fully self-contained: own project name, container, network, volume and port.
+# Nothing here is shared with any other stack running on the same Docker host.
+name: little-honey-books
+
 services:
   books:
     build: .
+    image: little-honey-books:latest
     container_name: little-honey-books
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "${BIND_ADDRESS:-0.0.0.0}:${HOST_PORT:-3100}:3000"
     environment:
       APP_PASSWORD: ${APP_PASSWORD:?Set APP_PASSWORD in the .env file}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}   # set to true once it is served over https
@@ -12,6 +17,13 @@ services:
       TZ: Australia/Perth
     volumes:
       - books-data:/data
+    networks:
+      - honey
+
+networks:
+  honey:
+    name: little-honey-books_net
 
 volumes:
   books-data:
+    name: little-honey-books_books-data
